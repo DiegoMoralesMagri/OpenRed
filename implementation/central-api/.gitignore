@@ -1,0 +1,58 @@
+# Configuration et variables d'environnement sensibles
+.env
+.env.production
+.env.staging
+.env.development
+.env.local
+.env.test
+
+# Fichiers de configuration avec mots de passe
+production_config.py
+staging_config.py
+local_config.py
+
+# Base de données
+*.db
+*.sqlite
+*.sqlite3
+database.sql
+
+# Logs
+*.log
+*.log.*
+logs/
+
+# Uploads et fichiers utilisateur
+uploads/
+user_data/
+temp/
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environnements virtuels
+venv/
+.venv/
+env/
+
+# Certificats SSL
+*.pem
+*.key
+*.crt
+ssl/
+
+# Fichiers de sauvegarde
+*.backup
+*.bak
+*.old
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

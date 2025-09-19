@@ -1,0 +1,45 @@
+# FR: Dépendances Python pour la production OpenRed
+# EN: Python dependencies for OpenRed production
+# ES: Dependencias de Python para la producción de OpenRed
+# ZH: OpenRed生产环境的Python依赖
+
+# Framework principal
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Base de données MySQL pour O2Switch
+pymysql==1.1.0
+sqlalchemy==2.0.23
+alembic==1.13.1
+
+# Sécurité et authentification
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# Configuration et variables d'environnement
+pydantic==2.5.0
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+
+# CORS et middleware
+python-cors==1.0.0
+starlette==0.27.0
+
+# Logging et monitoring
+structlog==23.2.0
+
+# Utilitaires
+aiofiles==23.2.1
+httpx==0.25.2
+
+# Redis (optionnel, si disponible sur O2Switch)
+redis==5.0.1
+aioredis==2.0.1
+
+# Validation et sérialisation
+email-validator==2.1.0
+phonenumbers==8.13.26
+
+# Cryptographie additionnelle
+cryptography==41.0.8
