@@ -1,0 +1,132 @@
+name: Feature Request
+description: Proposer une nouvelle fonctionnalité pour O-Red
+title: "[FEATURE] "
+labels: ["enhancement", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de proposer une nouvelle fonctionnalité pour O-Red ! 
+        
+        Votre contribution d'idées nous aide à faire évoluer le projet dans la bonne direction.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Résumé de la fonctionnalité
+      description: Une description claire et concise de la fonctionnalité souhaitée
+      placeholder: "Je souhaiterais que O-Red puisse..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème à résoudre
+      description: Quel problème cette fonctionnalité résoudrait-elle ?
+      placeholder: "J'ai du mal à... / Il serait plus pratique de... / Il manque..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution proposée
+      description: Description détaillée de la fonctionnalité que vous aimeriez voir
+      placeholder: "Je propose d'ajouter..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Composant concerné
+      description: Quel composant de O-Red devrait inclure cette fonctionnalité ?
+      options:
+        - API Centrale (FastAPI)
+        - Interface Web (React)
+        - Client Nœud P2P
+        - O-RedMind (IA)
+        - O-RedStore (Marketplace)
+        - O-RedOffice (Suite bureautique)
+        - O-RedSearch (Moteur de recherche)
+        - O-RedID (Identité)
+        - Documentation
+        - Infrastructure
+        - Nouveau composant
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité suggérée
+      description: Quelle importance accordez-vous à cette fonctionnalité ?
+      options:
+        - Critique (essentiel pour l'adoption)
+        - Haute (améliorerait significativement l'expérience)
+        - Moyenne (serait un plus appréciable)
+        - Basse (nice-to-have)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Complexité estimée
+      description: Selon vous, quelle serait la complexité d'implémentation ?
+      options:
+        - Simple (quelques heures)
+        - Modérée (quelques jours)
+        - Complexe (quelques semaines)
+        - Très complexe (plusieurs mois)
+        - Je ne sais pas
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considérées
+      description: Avez-vous pensé à d'autres approches pour résoudre ce problème ?
+      placeholder: "J'ai aussi pensé à... / Une alternative serait..."
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Idées d'implémentation
+      description: Si vous avez des idées sur comment implémenter cette fonctionnalité, partagez-les
+      placeholder: "Cela pourrait être implémenté en..."
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups ou exemples
+      description: Si applicable, ajoutez des captures d'écran, mockups ou liens vers des exemples
+
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: Souhaitez-vous contribuer à l'implémentation ?
+      description: Seriez-vous intéressé(e) à travailler sur cette fonctionnalité ?
+      options:
+        - Oui, je peux implémenter cette fonctionnalité
+        - Oui, je peux aider mais j'aurais besoin de guidance
+        - Je peux tester et donner des retours
+        - Non, mais je soutiens l'idée
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Contexte supplémentaire
+      description: Toute autre information qui pourrait être utile
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: J'ai vérifié qu'une fonctionnalité similaire n'a pas déjà été proposée
+          required: true
+        - label: Cette fonctionnalité est alignée avec la philosophie de O-Red (décentralisation, éthique, vie privée)
+          required: true
+        - label: J'ai fourni suffisamment de détails pour comprendre la demande
+          required: true

@@ -1,0 +1,132 @@
+name: Solicitud de funcionalidad
+description: Proponer una nueva funcionalidad para O-Red
+title: "[FEATURE] "
+labels: ["enhancement", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Gracias por proponer una nueva funcionalidad para O-Red!
+
+        Tus ideas ayudan al proyecto a evolucionar en la dirección correcta.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Resumen de la funcionalidad
+      description: Una descripción clara y concisa de la funcionalidad solicitada
+      placeholder: "Me gustaría que O-Red..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema a resolver
+      description: ¿Qué problema resolvería esta funcionalidad?
+      placeholder: "Tengo problemas para... / Sería útil..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solución propuesta
+      description: Descripción detallada de la funcionalidad que deseas
+      placeholder: "Propongo añadir..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Componente afectado
+      description: ¿Qué componente de O-Red debería incluir esta funcionalidad?
+      options:
+        - API Central (FastAPI)
+        - Interfaz Web (React)
+        - Cliente Nodo P2P
+        - O-RedMind (IA)
+        - O-RedStore (Marketplace)
+        - O-RedOffice (Suite)
+        - O-RedSearch (Motor de búsqueda)
+        - O-RedID (Identidad)
+        - Documentación
+        - Infraestructura
+        - Nuevo componente
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridad sugerida
+      description: ¿Qué importancia tiene esta funcionalidad?
+      options:
+        - Crítica
+        - Alta
+        - Media
+        - Baja
+    validations:
+      required: true
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Complejidad estimada
+      description: ¿Qué complejidad de implementación estimas?
+      options:
+        - Simple
+        - Moderada
+        - Compleja
+        - Muy compleja
+        - No lo sé
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+      description: Otras aproximaciones que has considerado
+      placeholder: "También pensé en..."
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Ideas de implementación
+      description: Si tienes ideas sobre implementación, compártelas
+      placeholder: "Esto podría implementarse mediante..."
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups o ejemplos
+      description: Añade capturas, mockups o enlaces si aplica
+
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: ¿Contribuirás?
+      description: ¿Te interesa implementar la funcionalidad?
+      options:
+        - Sí, puedo implementarla
+        - Sí, puedo ayudar con orientación
+        - Puedo probar y dar feedback
+        - No, pero apoyo la idea
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Contexto adicional
+      description: Cualquier otra información útil
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: Verifiqué que no se haya propuesto una funcionalidad similar
+          required: true
+        - label: Esta funcionalidad se alinea con la filosofía de O-Red
+          required: true
+        - label: Proporcioné suficientes detalles
+          required: true

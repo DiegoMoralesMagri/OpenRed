@@ -1,0 +1,140 @@
+name: Bug Report
+description: Signaler un bug dans O-Red
+title: "[BUG] "
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de prendre le temps de signaler ce bug ! Cela nous aide à améliorer O-Red.
+        
+        Avant de soumettre, veuillez vérifier que le bug n'a pas déjà été signalé dans les [issues existantes](../issues).
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description du bug
+      description: Une description claire et concise du problème
+      placeholder: "Décrivez ce qui ne fonctionne pas..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Étapes pour reproduire
+      description: Comment reproduire le problème
+      placeholder: |
+        1. Aller à '...'
+        2. Cliquer sur '...'
+        3. Faire défiler jusqu'à '...'
+        4. Voir l'erreur
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportement attendu
+      description: Ce qui devrait se passer normalement
+      placeholder: "Je m'attendais à ce que..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportement actuel
+      description: Ce qui se passe réellement
+      placeholder: "Au lieu de cela, j'ai vu..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Composant affecté
+      description: Quel composant de O-Red est affecté ?
+      options:
+        - API Centrale (FastAPI)
+        - Interface Web (React)
+        - Client Nœud P2P
+        - O-RedMind (IA)
+        - O-RedStore (Marketplace)
+        - O-RedOffice (Suite bureautique)
+        - O-RedSearch (Moteur de recherche)
+        - Documentation
+        - Scripts de déploiement
+        - Autre (préciser dans la description)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Sévérité
+      description: À quel point ce bug affecte-t-il l'utilisation ?
+      options:
+        - Critique (bloque l'utilisation)
+        - Élevée (fonctionnalité importante cassée)
+        - Moyenne (inconvénient mineur)
+        - Basse (cosmétique)
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Système d'exploitation
+      placeholder: "ex. Windows 11, Ubuntu 20.04, macOS 12.0"
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Navigateur (si applicable)
+      placeholder: "ex. Chrome 96, Firefox 94, Safari 15"
+
+  - type: input
+    id: python-version
+    attributes:
+      label: Version Python
+      placeholder: "ex. 3.9.7"
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Version Node.js
+      placeholder: "ex. 16.14.0"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs et messages d'erreur
+      description: Copiez tous les logs ou messages d'erreur pertinents
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Captures d'écran
+      description: Si applicable, ajoutez des captures d'écran
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Contexte supplémentaire
+      description: Toute autre information qui pourrait être utile
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: J'ai vérifié que ce bug n'a pas déjà été signalé
+          required: true
+        - label: J'ai testé avec la dernière version du code
+          required: true
+        - label: J'ai inclus toutes les informations nécessaires pour reproduire le bug
+          required: true
