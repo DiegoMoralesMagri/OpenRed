@@ -1,23 +1,12 @@
-# Configuration Apache pour O2Switch
+# Configuration Apache pour O2Switch - Version Simple
 RewriteEngine On
 
-# Redirection vers l'application Python
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /cgi-bin/index.py/$1 [QSA,L]
-
-# Headers de sécurité
-Header always set X-Content-Type-Options nosniff
-Header always set X-Frame-Options DENY
-Header always set X-XSS-Protection "1; mode=block"
-
-# CORS Headers
+# Headers de base
 Header always set Access-Control-Allow-Origin "*"
 Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
-Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+Header always set Access-Control-Allow-Headers "Content-Type"
 
-# Cache statique
-<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg)$">
-    ExpiresActive On
-    ExpiresDefault "access plus 1 month"
-</FilesMatch>
+# Redirection vers l'application Python (si nécessaire)
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)$ test_wsgi.py [QSA,L]

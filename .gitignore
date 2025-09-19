@@ -13,6 +13,13 @@ venv/
 # Private local files
 actionslog.md
 
+# Test and debugging files (do not commit)
+test_wsgi.py
+diagnostic.py
+CONFIGURATION_CPANEL_DETAILLEE.md
+main_simple.py
+index.py
+
 # Production and sensitive files
 .env.production
 .env.staging
