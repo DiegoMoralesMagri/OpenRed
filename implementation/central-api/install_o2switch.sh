@@ -63,8 +63,25 @@ cd ~/openred_api
 python3 -m venv venv
 source venv/bin/activate
 
-# Installer les dépendances
-pip install -r requirements-production.txt
+# Mettre à jour pip
+pip install --upgrade pip
+
+# Essayer d'installer d'abord les dépendances minimales
+log "Installation des dépendances minimales..."
+if pip install -r requirements-minimal.txt; then
+    log "Dépendances minimales installées avec succès"
+    
+    # Essayer les dépendances complètes
+    log "Installation des dépendances complètes..."
+    if pip install -r requirements-production.txt; then
+        log "Toutes les dépendances installées avec succès"
+    else
+        warning "Certaines dépendances optionnelles ont échoué, mais l'API peut fonctionner"
+    fi
+else
+    error "Échec de l'installation des dépendances minimales"
+    exit 1
+fi
 
 # Configuration de la base de données
 log "Configuration de la base de données..."

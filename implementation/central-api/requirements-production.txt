@@ -22,8 +22,7 @@ pydantic==2.5.0
 pydantic-settings==2.1.0
 python-dotenv==1.0.0
 
-# CORS et middleware
-python-cors==1.0.0
+# Middleware (CORS intégré dans FastAPI)
 starlette==0.27.0
 
 # Logging et monitoring
