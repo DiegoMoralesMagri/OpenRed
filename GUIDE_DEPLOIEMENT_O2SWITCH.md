@@ -85,13 +85,27 @@ Ajouter dans l'app Python :
 - `DATABASE_URL=mysql+pymysql://...`
 - `SECRET_KEY=...`
 
-## Étape 5: Tests
+## Étape 5: Tests et Diagnostic
 
-### 5.1 Test de l'API
+### 5.1 Diagnostic de l'environnement
+Avant de tester l'API, vérifiez l'environnement :
+```bash
+# Exécuter le diagnostic
+python3 ~/openred_api/diagnostic.py
+```
+Ou via web : `https://api.o-red.org/diagnostic.py`
+
+### 5.2 Test simple avec version minimale
+1. Utilisez d'abord `main_simple.py` au lieu de `main.py`
+2. Modifiez l'application Python dans cPanel :
+   - Point d'entrée : `app/main_simple.py`
+   - Ou utilisez `app/index.py` qui charge automatiquement la version simple
+
+### 5.3 Test de l'API
 Vérifier : `https://api.o-red.org/health`
 Réponse attendue : `{"status": "healthy"}`
 
-### 5.2 Test de la base de données
+### 5.4 Test de la base de données
 Vérifier : `https://api.o-red.org/api/v1/nodes`
 Réponse : Liste des nœuds (vide au début)
 
@@ -105,10 +119,42 @@ Pointer le nœud vers l'API centrale : `https://api.o-red.org`
 
 ## Dépannage
 
-### Erreurs communes
-- **500 Error** : Vérifier les logs dans cPanel
+### Erreur 500 Internal Server Error
+
+#### Causes communes :
+1. **Modules Python manquants** : Vérifiez avec `diagnostic.py`
+2. **Mauvais point d'entrée** : Utilisez `main_simple.py` pour commencer
+3. **Permissions fichiers** : Vérifiez que les fichiers Python sont exécutables
+4. **Configuration cPanel** : Vérifiez l'application Python dans cPanel
+
+#### Solutions étape par étape :
+
+1. **Testez la version simple** :
+   - Changez le point d'entrée vers `app/main_simple.py`
+   - Ou utilisez `app/index.py`
+
+2. **Vérifiez les logs** :
+   ```bash
+   tail -f ~/logs/access.log
+   tail -f ~/logs/error.log
+   ```
+
+3. **Vérifiez les permissions** :
+   ```bash
+   chmod +x ~/openred_api/app/*.py
+   chmod 644 ~/openred_api/.htaccess
+   ```
+
+4. **Test manuel** :
+   ```bash
+   cd ~/openred_api
+   python3 app/main_simple.py
+   ```
+
+### Autres erreurs communes
+- **500 Error** : Vérifier les logs dans cPanel + utiliser diagnostic.py
 - **Database Error** : Vérifier les credentials MySQL
-- **Import Error** : Vérifier l'installation des dépendances
+- **Import Error** : Vérifier l'installation des dépendances avec requirements-minimal.txt
 
 ### Logs
 Consulter les logs dans :
