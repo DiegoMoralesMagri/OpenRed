@@ -1,0 +1,52 @@
+# Requirements simplifiés pour O2Switch
+# Simplified requirements for O2Switch hosting
+# Version minimale compatible avec hébergements partagés
+
+# Framework principal
+# Main framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Base de données - support MySQL et SQLite
+# Database - MySQL and SQLite support
+sqlalchemy==2.0.23
+pymysql==1.1.0
+alembic==1.12.1
+
+# Sécurité basique
+# Basic security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# Utilitaires essentiels
+# Essential utilities
+pydantic==2.5.0
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+
+# HTTP et validation
+# HTTP and validation
+httpx==0.25.2
+email-validator==2.1.0
+
+# Logs et monitoring minimal
+# Minimal logging and monitoring
+structlog==23.2.0
+
+# Support CORS
+# CORS support
+python-cors==1.7.0
+
+# JSON et sérialisation
+# JSON and serialization
+orjson==3.9.10
+
+# Optionnel - Redis si disponible
+# Optional - Redis if available
+# redis==5.0.1
+
+# Optionnel - Monitoring avancé (à désactiver sur O2Switch)
+# Optional - Advanced monitoring (disable on O2Switch)  
+# prometheus-client==0.19.0
+# psutil==5.9.6
