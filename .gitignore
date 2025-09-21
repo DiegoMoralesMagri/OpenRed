@@ -183,3 +183,60 @@ config/secrets.json
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Additional production security
+# Secret keys and API tokens
+secrets/
+*.secret
+*secrets.json
+*api_keys*
+*tokens*
+
+# Production configuration
+docker-compose.prod.yml
+docker-compose.production.yml
+k8s/production/
+terraform/
+ansible/
+
+# Backup files
+*.backup
+*.bak
+backups/
+dumps/
+
+# Monitoring and metrics
+prometheus/
+grafana/
+*.metrics
+
+# Runtime and cache
+cache/
+tmp/
+temp/
+.tmp/
+
+# CI/CD secrets
+.github/secrets/
+.gitlab-ci-secrets/
+jenkins/secrets/
+
+# Container images and builds
+*.tar
+*.tar.gz
+dist/
+build/
+.docker/
+
+# Load testing
+*.jmx
+load_test_results/
+
+# Security scans
+security_reports/
+vulnerabilities/
+bandit_reports/
+
+# Performance profiles
+*.prof
+*.pstats
