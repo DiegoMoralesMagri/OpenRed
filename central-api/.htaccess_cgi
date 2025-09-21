@@ -1,0 +1,69 @@
+# Configuration O2Switch pour OpenRed Central API v2.0
+# Version CGI - Compatible hébergement partagé
+
+# Activation Python CGI
+AddHandler cgi-script .py
+Options +ExecCGI
+
+# Page par défaut
+DirectoryIndex index.py
+
+# Configuration Python
+<Files "index.py">
+    SetHandler cgi-script
+    Options +ExecCGI
+</Files>
+
+# Sécurité - Cacher les fichiers sensibles
+<Files "*.md">
+    Require all denied
+</Files>
+
+<Files "*.log">
+    Require all denied
+</Files>
+
+<Files "*.env*">
+    Require all denied
+</Files>
+
+<Files "*.sh">
+    Require all denied
+</Files>
+
+# Headers de sécurité OWASP
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"
+Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
+
+# CORS pour API
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+
+# Gestion des requêtes OPTIONS (CORS preflight)
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ index.py [L]
+
+# Redirection de toutes les requêtes API vers index.py
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.py/$1 [L,QSA]
+
+# Cache des réponses JSON
+<IfModule mod_expires.c>
+    ExpiresActive on
+    ExpiresByType application/json "access plus 1 hour"
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE text/plain
+</IfModule>
+
+# Redirection HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
