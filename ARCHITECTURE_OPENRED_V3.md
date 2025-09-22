@@ -1,5 +1,14 @@
 # 🚀 OpenRed v3.0 - Architecture Décentralisée Avancée
 
+🌐 **Navigation Multilingue** | **Multilingual Navigation**
+- [🇫🇷 Français](#français) | [🇺🇸 English](#english) | [🇪🇸 Español](#español) | [🇨🇳 中文](#中文)
+
+---
+
+## Français
+
+# 🚀 OpenRed v3.0 - Architecture Décentralisée Avancée
+
 ## 📋 Vue d'ensemble
 
 OpenRed v3.0 adopte une architecture **ultra-décentralisée** où l'API centrale sert uniquement d'**annuaire de découverte**, tandis que chaque nœud gère sa propre sécurité, cryptographie et communications directes.
@@ -402,3 +411,393 @@ async def auth_challenge(challenge: AuthChallenge, token: str):
 ---
 
 Cette architecture offre un équilibre optimal entre **sécurité**, **performance** et **simplicité**, tout en permettant une **évolutivité maximale** pour l'écosystème OpenRed.
+
+---
+
+## English
+
+# 🚀 OpenRed v3.0 - Advanced Decentralized Architecture
+
+## 📋 Overview
+
+OpenRed v3.0 adopts an **ultra-decentralized** architecture where the central API serves only as a **discovery directory**, while each node manages its own security, cryptography, and direct communications.
+
+## 🏗️ General Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    OPENRED CENTRAL API                         │
+│                   (Minimal Directory)                          │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ • Node IDs                                              │   │
+│  │ • Node API URLs                                         │   │
+│  │ • Temporary token generation service                    │   │
+│  │ • Token routing to nodes                                │   │
+│  └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+                                   │
+                                   │ Token distribution
+                                   │
+              ┌────────────────────┼────────────────────┐
+              │                    │                    │
+              ▼                    ▼                    ▼
+    ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+    │   NODE A        │  │   NODE B        │  │   NODE C        │
+    │                 │  │                 │  │                 │
+    │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │
+    │ │ Crypto Core │ │  │ │ Crypto Core │ │  │ │ Crypto Core │ │
+    │ │   Module    │ │  │ │   Module    │ │  │ │   Module    │ │
+    │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │
+    │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │
+    │ │   Token     │ │  │ │   Token     │ │  │ │   Token     │ │
+    │ │  Manager    │ │  │ │  Manager    │ │  │ │  Manager    │ │
+    │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │
+    │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │
+    │ │   P2P API   │ │  │ │   P2P API   │ │  │ │   P2P API   │ │
+    │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │
+    └─────────────────┘  └─────────────────┘  └─────────────────┘
+              │                    │                    │
+              └────────────────────┼────────────────────┘
+                                   │
+                      Direct P2P communications
+```
+
+## 🎯 Main Components
+
+### 1. **OpenRed Central API** (Ultra-minimalist)
+
+#### 📋 Responsibilities
+- **Directory**: Node ID ↔ API URL storage
+- **Token generation**: Temporary tokens for connection establishment
+- **Distribution**: Automatic token sending to concerned nodes
+- **No storage**: No tokens, no user data
+
+#### 💾 Data structure
+```python
+{
+    "nodes": {
+        "node_a_id": {
+            "api_url": "https://node-a.example.com/api",
+            "last_seen": "2025-09-22T10:30:00Z",
+            "status": "active"
+        },
+        "node_b_id": {
+            "api_url": "https://node-b.example.com/api", 
+            "last_seen": "2025-09-22T10:25:00Z",
+            "status": "active"
+        }
+    }
+}
+```
+
+### 2. **OpenRed Nodes** (Autonomous and secure)
+
+#### 🏗️ Modular structure
+```
+openred-node/
+├── core/
+│   ├── crypto_engine/          # Cryptographic engine
+│   │   ├── methods/
+│   │   │   ├── cipher_alpha.py    # Crypto method A
+│   │   │   ├── cipher_beta.py     # Crypto method B
+│   │   │   ├── cipher_gamma.py    # Crypto method C
+│   │   │   └── cipher_factory.py  # Method selector
+│   │   ├── token_processor.py     # Token processor
+│   │   └── validator.py          # Token validator
+│   ├── token_manager/          # Token manager
+│   │   ├── storage.py             # .env storage
+│   │   ├── lifecycle.py           # Token lifecycle
+│   │   └── sync.py                # Synchronization
+│   └── p2p_api/               # P2P API
+│       ├── routes.py              # API routes
+│       ├── middleware.py          # Security middleware
+│       └── handlers.py            # Handlers
+├── modules/
+│   ├── messaging/             # Messaging module
+│   ├── file_sharing/          # File sharing module
+│   ├── authentication/        # Advanced auth module
+│   └── monitoring/            # Monitoring module
+├── venv/                      # Main virtual environment
+├── crypto_venv/               # Isolated crypto env
+├── .env                       # Environment variables
+└── main.py                    # Entry point
+```
+
+## 🔐 Innovative Cryptographic System
+
+### 1. **Asymmetric token generation**
+
+#### 🎲 Basic principle
+Each token is generated with two different but mathematically linked cryptographic variations.
+
+### 2. **Cross validation**
+
+#### 🔍 Recognition principle
+```python
+def tokens_match(token_a, token_b, node_a_id, node_b_id, timestamp):
+    """
+    Verifies if two different tokens come from the same source
+    """
+    # Reconstruct base secret from token_a
+    reconstructed_from_a = reverse_transform(token_a, node_a_id, "variant_alpha")
+    
+    # Reconstruct base secret from token_b  
+    reconstructed_from_b = reverse_transform(token_b, node_b_id, "variant_beta")
+    
+    # Compare reconstructed secrets
+    return reconstructed_from_a == reconstructed_from_b
+```
+
+## 🔄 Communication Flow
+
+### 1. **Connection establishment**
+
+1. Node A requests connection to Node B via Central API
+2. Central API generates asymmetric tokens (token_a, token_b)
+3. Central API distributes tokens to both nodes
+4. Nodes establish direct P2P connection using tokens
+5. Cross-validation ensures security
+
+### 2. **Direct P2P communication**
+
+Once connection established, nodes communicate directly without central intervention.
+
+## 🛡️ Advanced Security
+
+### 1. **Environment isolation**
+
+#### 🔒 Crypto separation
+- Main environment: FastAPI, SQLite, etc.
+- Crypto environment: Only crypto modules, no network access
+
+### 2. **Secure token management**
+
+#### 💾 Encrypted .env storage
+- Tokens encrypted at rest
+- Automatic rotation
+- Obsolete token cleanup
+
+## 📈 Performance and Scalability
+
+### 1. **Optimizations**
+
+- Intelligent caching
+- Connection pools
+- Hot-loadable modules
+
+### 2. **Modular evolution**
+
+- Plugin architecture
+- Independent module updates
+- Open standards for interoperability
+
+## 📋 Architecture Advantages
+
+### ✅ **Security**
+- Zero-trust: Each node verifies independently
+- Distributed crypto: No single point of failure
+- Isolation: Separated crypto modules
+- Asymmetric tokens: Impossible to intercept and reuse
+
+### ✅ **Performance**  
+- Direct P2P: No central bottleneck
+- Intelligent cache: Fast validation
+- On-demand modules: Load only what's needed
+
+### ✅ **Scalability**
+- Decentralized: Natural horizontal growth
+- Modular: Add features without refactoring
+- Independent: Each node autonomous
+
+This architecture offers an optimal balance between **security**, **performance**, and **simplicity**, while enabling **maximum scalability** for the OpenRed ecosystem.
+
+---
+
+## Español
+
+# 🚀 OpenRed v3.0 - Arquitectura Descentralizada Avanzada
+
+## 📋 Visión General
+
+OpenRed v3.0 adopta una arquitectura **ultra-descentralizada** donde la API central sirve únicamente como **directorio de descubrimiento**, mientras cada nodo gestiona su propia seguridad, criptografía y comunicaciones directas.
+
+## 🎯 Componentes Principales
+
+### 1. **API Central OpenRed** (Ultra-minimalista)
+
+#### 📋 Responsabilidades
+- **Directorio**: Almacenamiento ID nodo ↔ URL API
+- **Generación de tokens**: Tokens temporales para establecimiento de conexión
+- **Distribución**: Envío automático de tokens a nodos concernidos
+- **Sin almacenamiento**: Sin tokens, sin datos de usuario
+
+### 2. **Nodos OpenRed** (Autónomos y seguros)
+
+#### 🏗️ Estructura modular
+```
+openred-node/
+├── core/
+│   ├── crypto_engine/          # Motor criptográfico
+│   ├── token_manager/          # Gestor de tokens
+│   └── p2p_api/               # API P2P
+├── modules/
+│   ├── messaging/             # Módulo mensajería
+│   ├── file_sharing/          # Módulo compartir archivos
+│   └── authentication/        # Módulo auth avanzada
+├── venv/                      # Entorno virtual principal
+├── crypto_venv/               # Entorno crypto aislado
+├── .env                       # Variables de entorno
+└── main.py                    # Punto de entrada
+```
+
+## 🔐 Sistema Criptográfico Innovador
+
+### 1. **Generación de tokens asimétricos**
+
+#### 🎲 Principio básico
+Cada token se genera con dos variaciones criptográficas diferentes pero matemáticamente vinculadas.
+
+### 2. **Validación cruzada**
+
+Los nodos pueden verificar si dos tokens diferentes provienen de la misma fuente sin compartir secretos.
+
+## 🔄 Flujo de Comunicación
+
+### 1. **Establecimiento de conexión**
+
+1. Nodo A solicita conexión a Nodo B vía API Central
+2. API Central genera tokens asimétricos
+3. API Central distribuye tokens a ambos nodos
+4. Nodos establecen conexión P2P directa
+5. Validación cruzada asegura seguridad
+
+### 2. **Comunicación P2P directa**
+
+Una vez establecida la conexión, los nodos se comunican directamente sin intervención central.
+
+## 🛡️ Seguridad Avanzada
+
+### 1. **Aislamiento de entornos**
+
+- Entorno principal: FastAPI, SQLite, etc.
+- Entorno crypto: Solo módulos crypto, sin acceso red
+
+### 2. **Gestión segura de tokens**
+
+- Tokens cifrados en reposo
+- Rotación automática
+- Limpieza de tokens obsoletos
+
+## 📈 Rendimiento y Escalabilidad
+
+### 1. **Optimizaciones**
+
+- Caché inteligente
+- Pools de conexiones
+- Módulos cargables en caliente
+
+### 2. **Evolución modular**
+
+- Arquitectura plugin
+- Actualizaciones independientes de módulos
+- Estándares abiertos para interoperabilidad
+
+Esta arquitectura ofrece un equilibrio óptimo entre **seguridad**, **rendimiento** y **simplicidad**, permitiendo **escalabilidad máxima** para el ecosistema OpenRed.
+
+---
+
+## 中文
+
+# 🚀 OpenRed v3.0 - 高级去中心化架构
+
+## 📋 概述
+
+OpenRed v3.0 采用**超去中心化**架构，中央API仅作为**发现目录**，每个节点管理自己的安全、加密和直接通信。
+
+## 🎯 主要组件
+
+### 1. **OpenRed 中央API**（超极简主义）
+
+#### 📋 职责
+- **目录**：节点ID ↔ API URL存储
+- **令牌生成**：连接建立的临时令牌
+- **分发**：自动向相关节点发送令牌
+- **无存储**：无令牌，无用户数据
+
+### 2. **OpenRed 节点**（自主且安全）
+
+#### 🏗️ 模块化结构
+```
+openred-node/
+├── core/
+│   ├── crypto_engine/          # 加密引擎
+│   ├── token_manager/          # 令牌管理器
+│   └── p2p_api/               # P2P API
+├── modules/
+│   ├── messaging/             # 消息模块
+│   ├── file_sharing/          # 文件共享模块
+│   └── authentication/        # 高级认证模块
+├── venv/                      # 主虚拟环境
+├── crypto_venv/               # 隔离加密环境
+├── .env                       # 环境变量
+└── main.py                    # 入口点
+```
+
+## 🔐 创新加密系统
+
+### 1. **非对称令牌生成**
+
+#### 🎲 基本原理
+每个令牌都用两个不同但数学相关的加密变体生成。
+
+### 2. **交叉验证**
+
+节点可以验证两个不同的令牌是否来自同一源，而无需共享秘密。
+
+## 🔄 通信流程
+
+### 1. **连接建立**
+
+1. 节点A通过中央API请求连接到节点B
+2. 中央API生成非对称令牌
+3. 中央API将令牌分发给两个节点
+4. 节点建立直接P2P连接
+5. 交叉验证确保安全
+
+### 2. **直接P2P通信**
+
+连接建立后，节点直接通信，无需中央干预。
+
+## 🛡️ 高级安全
+
+### 1. **环境隔离**
+
+- 主环境：FastAPI、SQLite等
+- 加密环境：仅加密模块，无网络访问
+
+### 2. **安全令牌管理**
+
+- 静态加密令牌
+- 自动轮换
+- 清理过时令牌
+
+## 📈 性能和可扩展性
+
+### 1. **优化**
+
+- 智能缓存
+- 连接池
+- 热加载模块
+
+### 2. **模块化演进**
+
+- 插件架构
+- 独立模块更新
+- 互操作性开放标准
+
+该架构在**安全性**、**性能**和**简单性**之间提供最佳平衡，同时为OpenRed生态系统实现**最大可扩展性**。
+
+---
+
+🌐 **Navigation** | **导航**
+- [🇫🇷 Français](#français) | [🇺🇸 English](#english) | [🇪🇸 Español](#español) | [🇨🇳 中文](#中文)
