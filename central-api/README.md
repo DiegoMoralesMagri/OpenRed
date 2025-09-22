@@ -157,21 +157,3 @@ central-api/
 
 🌐 **Navigation** | **导航**
 - [🇫🇷 Français](#français) | [🇺🇸 English](#english) | [🇪🇸 Español](#español) | [🇨🇳 中文](#中文)
-├── main.py             # Point d'entrée
-└── README.md           # Documentation
-```
-
-## Installation
-
-```bash
-cd central-api
-pip install -r requirements.txt
-python main.py
-```
-
-## Endpoints
-
-- `POST /api/v1/nodes/register` - Enregistrement d'un node
-- `GET /api/v1/nodes/discover` - Découverte de nodes
-- `POST /api/v1/messages/route` - Routage de messages
-- `GET /api/v1/nodes/{id}/status` - Statut d'un node

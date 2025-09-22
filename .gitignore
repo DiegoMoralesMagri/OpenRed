@@ -12,6 +12,7 @@ venv/
 
 # Private local files
 actionslog.md
+GUIDE_PUBLICATION_GITHUB.md
 
 # Test and debugging files (do not commit)
 test_wsgi.py

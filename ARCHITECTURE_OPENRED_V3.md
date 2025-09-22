@@ -548,6 +548,235 @@ def tokens_match(token_a, token_b, node_a_id, node_b_id, timestamp):
     return reconstructed_from_a == reconstructed_from_b
 ```
 
+#### 🔄 Generation process
+```python
+def generate_asymmetric_tokens(node_a_id, node_b_id, timestamp):
+    """
+    Generates two different but cryptographically linked tokens
+    """
+    # Common secret base
+    base_secret = sha256(f"{node_a_id}:{node_b_id}:{timestamp}").digest()
+    
+    # Token for node A
+    token_a = transform_with_node_salt(base_secret, node_a_id, "variant_alpha")
+    
+    # Token for node B  
+    token_b = transform_with_node_salt(base_secret, node_b_id, "variant_beta")
+    
+    return token_a, token_b
+```
+
+#### 🧮 Transformation methods
+1. **XOR with unique salt**: `token ⊕ node_salt`
+2. **Circular rotation**: Bit shifting based on node_id
+3. **Controlled permutation**: Byte rearrangement according to algorithm
+4. **Cascade hashing**: Multiple hashing with different seeds
+
+### 3. **Cryptographic methods by epoch**
+
+#### 📅 Temporal selection
+```python
+def select_crypto_method(timestamp):
+    """
+    Selects crypto method according to date/time
+    """
+    hour = datetime.fromisoformat(timestamp).hour
+    day = datetime.fromisoformat(timestamp).day
+    
+    # Selection example
+    method_index = (hour + day) % NUMBER_OF_METHODS
+    
+    methods = ["cipher_alpha", "cipher_beta", "cipher_gamma", "cipher_delta"]
+    return methods[method_index]
+```
+
+#### 🔄 Method rotation
+- **Hourly**: Change every hour
+- **Daily**: Change by day of the week  
+- **Controlled random**: Based on timestamp + seed
+
+## 🔄 Communication Flow
+
+### 1. **Connection establishment**
+
+```mermaid
+sequenceDiagram
+    participant NA as Node A
+    participant CA as Central API
+    participant NB as Node B
+    
+    NA->>CA: POST /tokens/request-connection {target: node_b_id}
+    CA->>CA: Generate token_a and token_b
+    CA->>NA: POST /tokens/receive {from: node_b_id, token: token_a}
+    CA->>NB: POST /tokens/receive {from: node_a_id, token: token_b}
+    NA->>NB: POST /p2p/handshake {token: token_a}
+    NB->>NB: Validate tokens_match(token_a, token_b)
+    NB->>NA: 200 OK {session_established: true}
+```
+
+### 2. **Direct P2P communication**
+
+```mermaid
+sequenceDiagram
+    participant NA as Node A
+    participant NB as Node B
+    
+    Note over NA,NB: Session established via tokens
+    
+    NA->>NB: POST /p2p/message {data: encrypted_content}
+    NB->>NA: 200 OK {received: true}
+    
+    NB->>NA: POST /p2p/file-request {file_id: "doc123"}
+    NA->>NB: 200 OK {file_url: "encrypted_link"}
+```
+
+## 🛡️ Advanced Security
+
+### 1. **Environment isolation**
+
+#### 🔒 Crypto separation
+```bash
+# Main environment
+/openred-node/venv/
+├── FastAPI, SQLite, etc.
+
+# Isolated crypto environment  
+/openred-node/crypto_venv/
+├── Only crypto modules
+├── No network access
+├── Possible Chroot jail
+```
+
+#### 🚧 Inter-env communication
+```python
+def crypto_operation(data, method):
+    """
+    Execute crypto operation in isolated environment
+    """
+    # Communication via pipes/Unix sockets
+    result = subprocess.run([
+        "crypto_venv/bin/python", 
+        "crypto_engine/processor.py",
+        "--method", method,
+        "--data", data
+    ], capture_output=True, text=True)
+    
+    return result.stdout
+```
+
+### 2. **Secure token management**
+
+#### 💾 Encrypted .env storage
+```python
+# .env (encrypted at rest)
+NODE_A_TOKEN_ABC123=encrypted:AES256:base64data
+NODE_B_TOKEN_DEF456=encrypted:AES256:base64data
+TOKEN_MASTER_KEY=derived_from_node_secret
+```
+
+#### 🔄 Automatic rotation
+- **Expiration**: Tokens automatically expired
+- **Renewal**: Automatic request before expiration
+- **Cleanup**: Removal of obsolete tokens
+
+### 3. **Audit and monitoring**
+
+#### 📊 Secure logging
+```python
+# Encrypted and signed logs
+{
+    "timestamp": "2025-09-22T10:30:00Z",
+    "event": "token_validation", 
+    "node_id": "hashed_node_id",
+    "success": true,
+    "signature": "crypto_signature"
+}
+```
+
+## 📈 Performance and Scalability
+
+### 1. **Optimizations**
+
+#### ⚡ Intelligent caching
+```python
+# Cache validated tokens
+token_cache = {
+    "node_pair_hash": {
+        "valid_until": timestamp,
+        "crypto_method": "cipher_alpha",
+        "validation_result": True
+    }
+}
+```
+
+#### 🔄 Connection pools
+```python
+# Reusable P2P connection pool
+connection_pool = {
+    "node_id": persistent_connection,
+    "max_connections": 100,
+    "timeout": 300
+}
+```
+
+### 2. **Modular scalability**
+
+#### 🧩 Plugin architecture
+```python
+class OpenRedModule:
+    def register_routes(self, app):
+        pass
+    
+    def register_crypto_methods(self, crypto_engine):
+        pass
+        
+    def register_middleware(self, app):
+        pass
+
+# Hot-loadable modules
+modules = [
+    MessagingModule(),
+    FileSharingModule(), 
+    AuthenticationModule(),
+    CustomModule()
+]
+```
+
+## 🚀 Extensible Modules
+
+### 1. **Messaging Module**
+```python
+# messaging/routes.py
+@router.post("/p2p/message/send")
+async def send_message(message: EncryptedMessage, token: str):
+    # P2P token validation
+    # End-to-end encryption
+    # Direct routing
+    pass
+```
+
+### 2. **File Sharing Module**
+```python
+# file_sharing/routes.py  
+@router.post("/p2p/file/share")
+async def share_file(file_request: FileShareRequest, token: str):
+    # Permission validation
+    # Generate temporary links
+    # File encryption
+    pass
+```
+
+### 3. **Authentication Module**
+```python
+# authentication/routes.py
+@router.post("/p2p/auth/challenge")
+async def auth_challenge(challenge: AuthChallenge, token: str):
+    # Multi-factor authentication
+    # Optional biometrics
+    # Secure sessions
+    pass
+```
+
 ## 🔄 Communication Flow
 
 ### 1. **Connection establishment**
@@ -621,15 +850,81 @@ This architecture offers an optimal balance between **security**, **performance*
 
 OpenRed v3.0 adopta una arquitectura **ultra-descentralizada** donde la API central sirve únicamente como **directorio de descubrimiento**, mientras cada nodo gestiona su propia seguridad, criptografía y comunicaciones directas.
 
-## 🎯 Componentes Principales
+## �️ Arquitectura General
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    API CENTRAL OPENRED                         │
+│                   (Directorio Mínimo)                          │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ • IDs de nodos                                          │   │
+│  │ • URLs de APIs de nodos                                 │   │
+│  │ • Servicio de generación de tokens temporales          │   │
+│  │ • Enrutamiento de tokens hacia nodos                   │   │
+│  └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+                                   │
+                                   │ Distribución de tokens
+                                   │
+              ┌────────────────────┼────────────────────┐
+              │                    │                    │
+              ▼                    ▼                    ▼
+    ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+    │   NODO A        │  │   NODO B        │  │   NODO C        │
+    │                 │  │                 │  │                 │
+    │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │
+    │ │ Núcleo      │ │  │ │ Núcleo      │ │  │ │ Núcleo      │ │
+    │ │ Cripto      │ │  │ │ Cripto      │ │  │ │ Cripto      │ │
+    │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │
+    │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │
+    │ │ Gestor de   │ │  │ │ Gestor de   │ │  │ │ Gestor de   │ │
+    │ │ Tokens      │ │  │ │ Tokens      │ │  │ │ Tokens      │ │
+    │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │
+    │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │
+    │ │   API P2P   │ │  │ │   API P2P   │ │  │ │   API P2P   │ │
+    │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │
+    └─────────────────┘  └─────────────────┘  └─────────────────┘
+              │                    │                    │
+              └────────────────────┼────────────────────┘
+                                   │
+                      Comunicaciones P2P directas
+```
+
+## �🎯 Componentes Principales
 
 ### 1. **API Central OpenRed** (Ultra-minimalista)
 
 #### 📋 Responsabilidades
-- **Directorio**: Almacenamiento ID nodo ↔ URL API
-- **Generación de tokens**: Tokens temporales para establecimiento de conexión
+- **Directorio**: Almacenamiento ID nodos ↔ URLs APIs
+- **Generación de tokens**: Creación de tokens temporales para establecimiento de enlace
 - **Distribución**: Envío automático de tokens a nodos concernidos
 - **Sin almacenamiento**: Sin tokens, sin datos de usuario
+
+#### 💾 Estructura de datos
+```python
+{
+    "nodes": {
+        "node_a_id": {
+            "api_url": "https://node-a.example.com/api",
+            "last_seen": "2025-09-22T10:30:00Z",
+            "status": "active"
+        },
+        "node_b_id": {
+            "api_url": "https://node-b.example.com/api", 
+            "last_seen": "2025-09-22T10:25:00Z",
+            "status": "active"
+        }
+    }
+}
+```
+
+#### 🔄 Endpoints API
+```
+POST /api/v3/nodes/register
+POST /api/v3/tokens/request-connection
+GET  /api/v3/nodes/discover
+GET  /api/v3/health
+```
 
 ### 2. **Nodos OpenRed** (Autónomos y seguros)
 
@@ -638,14 +933,28 @@ OpenRed v3.0 adopta una arquitectura **ultra-descentralizada** donde la API cent
 openred-node/
 ├── core/
 │   ├── crypto_engine/          # Motor criptográfico
+│   │   ├── methods/
+│   │   │   ├── cipher_alpha.py    # Método cripto A
+│   │   │   ├── cipher_beta.py     # Método cripto B
+│   │   │   ├── cipher_gamma.py    # Método cripto C
+│   │   │   └── cipher_factory.py  # Selector de método
+│   │   ├── token_processor.py     # Procesador de tokens
+│   │   └── validator.py          # Validador de tokens
 │   ├── token_manager/          # Gestor de tokens
+│   │   ├── storage.py             # Almacenamiento .env
+│   │   ├── lifecycle.py           # Ciclo de vida tokens
+│   │   └── sync.py                # Sincronización
 │   └── p2p_api/               # API P2P
+│       ├── routes.py              # Rutas API
+│       ├── middleware.py          # Middleware seguridad
+│       └── handlers.py            # Manejadores
 ├── modules/
 │   ├── messaging/             # Módulo mensajería
 │   ├── file_sharing/          # Módulo compartir archivos
-│   └── authentication/        # Módulo auth avanzada
+│   ├── authentication/        # Módulo auth avanzada
+│   └── monitoring/            # Módulo monitoreo
 ├── venv/                      # Entorno virtual principal
-├── crypto_venv/               # Entorno crypto aislado
+├── crypto_venv/               # Env virtual cripto aislado
 ├── .env                       # Variables de entorno
 └── main.py                    # Punto de entrada
 ```
@@ -657,52 +966,275 @@ openred-node/
 #### 🎲 Principio básico
 Cada token se genera con dos variaciones criptográficas diferentes pero matemáticamente vinculadas.
 
+#### 🔄 Proceso de generación
+```python
+def generate_asymmetric_tokens(node_a_id, node_b_id, timestamp):
+    """
+    Genera dos tokens diferentes pero criptográficamente vinculados
+    """
+    # Base común secreta
+    base_secret = sha256(f"{node_a_id}:{node_b_id}:{timestamp}").digest()
+    
+    # Token para nodo A
+    token_a = transform_with_node_salt(base_secret, node_a_id, "variant_alpha")
+    
+    # Token para nodo B  
+    token_b = transform_with_node_salt(base_secret, node_b_id, "variant_beta")
+    
+    return token_a, token_b
+```
+
+#### 🧮 Métodos de transformación
+1. **XOR con salt único**: `token ⊕ node_salt`
+2. **Rotación circular**: Desplazamiento bits basado en node_id
+3. **Permutación controlada**: Reordenamiento bytes según algoritmo
+4. **Hash en cascada**: Múltiple hasheo con seeds diferentes
+
 ### 2. **Validación cruzada**
 
-Los nodos pueden verificar si dos tokens diferentes provienen de la misma fuente sin compartir secretos.
+#### 🔍 Principio de reconocimiento
+```python
+def tokens_match(token_a, token_b, node_a_id, node_b_id, timestamp):
+    """
+    Verifica si dos tokens diferentes provienen de la misma fuente
+    """
+    # Reconstrucción del secreto base desde token_a
+    reconstructed_from_a = reverse_transform(token_a, node_a_id, "variant_alpha")
+    
+    # Reconstrucción del secreto base desde token_b  
+    reconstructed_from_b = reverse_transform(token_b, node_b_id, "variant_beta")
+    
+    # Comparación de secretos reconstruidos
+    return reconstructed_from_a == reconstructed_from_b
+```
+
+### 3. **Métodos criptográficos por época**
+
+#### 📅 Selección temporal
+```python
+def select_crypto_method(timestamp):
+    """
+    Selecciona el método cripto según fecha/hora
+    """
+    hour = datetime.fromisoformat(timestamp).hour
+    day = datetime.fromisoformat(timestamp).day
+    
+    # Ejemplo de selección
+    method_index = (hour + day) % NUMBER_OF_METHODS
+    
+    methods = ["cipher_alpha", "cipher_beta", "cipher_gamma", "cipher_delta"]
+    return methods[method_index]
+```
+
+#### 🔄 Rotación de métodos
+- **Por hora**: Cambio cada hora
+- **Diaria**: Cambio por día de la semana  
+- **Aleatoria controlada**: Basada en timestamp + seed
 
 ## 🔄 Flujo de Comunicación
 
 ### 1. **Establecimiento de conexión**
 
-1. Nodo A solicita conexión a Nodo B vía API Central
-2. API Central genera tokens asimétricos
-3. API Central distribuye tokens a ambos nodos
-4. Nodos establecen conexión P2P directa
-5. Validación cruzada asegura seguridad
+```mermaid
+sequenceDiagram
+    participant NA as Nodo A
+    participant CA as API Central
+    participant NB as Nodo B
+    
+    NA->>CA: POST /tokens/request-connection {target: node_b_id}
+    CA->>CA: Genera token_a y token_b
+    CA->>NA: POST /tokens/receive {from: node_b_id, token: token_a}
+    CA->>NB: POST /tokens/receive {from: node_a_id, token: token_b}
+    NA->>NB: POST /p2p/handshake {token: token_a}
+    NB->>NB: Valida tokens_match(token_a, token_b)
+    NB->>NA: 200 OK {session_established: true}
+```
 
 ### 2. **Comunicación P2P directa**
 
-Una vez establecida la conexión, los nodos se comunican directamente sin intervención central.
+```mermaid
+sequenceDiagram
+    participant NA as Nodo A
+    participant NB as Nodo B
+    
+    Note over NA,NB: Sesión establecida vía tokens
+    
+    NA->>NB: POST /p2p/message {data: encrypted_content}
+    NB->>NA: 200 OK {received: true}
+    
+    NB->>NA: POST /p2p/file-request {file_id: "doc123"}
+    NA->>NB: 200 OK {file_url: "encrypted_link"}
+```
 
 ## 🛡️ Seguridad Avanzada
 
 ### 1. **Aislamiento de entornos**
 
-- Entorno principal: FastAPI, SQLite, etc.
-- Entorno crypto: Solo módulos crypto, sin acceso red
+#### 🔒 Separación cripto
+```bash
+# Entorno principal
+/openred-node/venv/
+├── FastAPI, SQLite, etc.
 
-### 2. **Gestión segura de tokens**
+# Entorno cripto aislado  
+/openred-node/crypto_venv/
+├── Solo módulos cripto
+├── Sin acceso red
+├── Chroot jail posible
+```
 
-- Tokens cifrados en reposo
-- Rotación automática
-- Limpieza de tokens obsoletos
+#### 🚧 Comunicación inter-env
+```python
+def crypto_operation(data, method):
+    """
+    Ejecuta operación cripto en entorno aislado
+    """
+    # Comunicación vía pipes/sockets Unix
+    result = subprocess.run([
+        "crypto_venv/bin/python", 
+        "crypto_engine/processor.py",
+        "--method", method,
+        "--data", data
+    ], capture_output=True, text=True)
+    
+    return result.stdout
+```
 
-## 📈 Rendimiento y Escalabilidad
+### 2. **Gestión de tokens segura**
+
+#### 💾 Almacenamiento .env cifrado
+```python
+# .env (cifrado en reposo)
+NODE_A_TOKEN_ABC123=encrypted:AES256:base64data
+NODE_B_TOKEN_DEF456=encrypted:AES256:base64data
+TOKEN_MASTER_KEY=derived_from_node_secret
+```
+
+#### 🔄 Rotación automática
+- **Expiración**: Tokens expirados automáticamente
+- **Renovación**: Solicitud automática antes de expiración
+- **Limpieza**: Eliminación tokens obsoletos
+
+### 3. **Auditoría y monitoreo**
+
+#### � Logging seguro
+```python
+# Logs cifrados y firmados
+{
+    "timestamp": "2025-09-22T10:30:00Z",
+    "event": "token_validation", 
+    "node_id": "hashed_node_id",
+    "success": true,
+    "signature": "crypto_signature"
+}
+```
+
+## �📈 Rendimiento y Escalabilidad
 
 ### 1. **Optimizaciones**
 
-- Caché inteligente
-- Pools de conexiones
-- Módulos cargables en caliente
+#### ⚡ Caché inteligente
+```python
+# Caché tokens validados
+token_cache = {
+    "node_pair_hash": {
+        "valid_until": timestamp,
+        "crypto_method": "cipher_alpha",
+        "validation_result": True
+    }
+}
+```
 
-### 2. **Evolución modular**
+#### 🔄 Pool de conexiones
+```python
+# Pool conexiones P2P reutilizables
+connection_pool = {
+    "node_id": persistent_connection,
+    "max_connections": 100,
+    "timeout": 300
+}
+```
 
-- Arquitectura plugin
-- Actualizaciones independientes de módulos
-- Estándares abiertos para interoperabilidad
+### 2. **Escalabilidad modular**
 
-Esta arquitectura ofrece un equilibrio óptimo entre **seguridad**, **rendimiento** y **simplicidad**, permitiendo **escalabilidad máxima** para el ecosistema OpenRed.
+#### 🧩 Arquitectura plugin
+```python
+class OpenRedModule:
+    def register_routes(self, app):
+        pass
+    
+    def register_crypto_methods(self, crypto_engine):
+        pass
+        
+    def register_middleware(self, app):
+        pass
+
+# Módulos cargables en caliente
+modules = [
+    MessagingModule(),
+    FileSharingModule(), 
+    AuthenticationModule(),
+    CustomModule()
+]
+```
+
+## 🚀 Módulos Extensibles
+
+### 1. **Módulo Mensajería**
+```python
+# messaging/routes.py
+@router.post("/p2p/message/send")
+async def send_message(message: EncryptedMessage, token: str):
+    # Validación token P2P
+    # Cifrado extremo-a-extremo
+    # Enrutamiento directo
+    pass
+```
+
+### 2. **Módulo Compartir Archivos**
+```python
+# file_sharing/routes.py  
+@router.post("/p2p/file/share")
+async def share_file(file_request: FileShareRequest, token: str):
+    # Validación permisos
+    # Generación enlaces temporales
+    # Cifrado archivos
+    pass
+```
+
+### 3. **Módulo Autenticación**
+```python
+# authentication/routes.py
+@router.post("/p2p/auth/challenge")
+async def auth_challenge(challenge: AuthChallenge, token: str):
+    # Autenticación multi-factor
+    # Biometría opcional
+    # Sesiones seguras
+    pass
+```
+
+## 📋 Ventajas de esta Arquitectura
+
+### ✅ **Seguridad**
+- **Zero-trust**: Cada nodo verifica independientemente
+- **Cripto distribuido**: Sin punto único de falla
+- **Aislamiento**: Módulos cripto separados
+- **Tokens asimétricos**: Imposible interceptar y reutilizar
+
+### ✅ **Rendimiento**  
+- **P2P directo**: Sin cuello de botella central
+- **Caché inteligente**: Validación rápida
+- **Módulos bajo demanda**: Carga solo lo necesario
+
+### ✅ **Escalabilidad**
+- **Descentralizado**: Crecimiento horizontal natural
+- **Modular**: Agregar funciones sin refactoring
+- **Independiente**: Cada nodo autónomo
+
+### ✅ **Mantenimiento**
+- **API central minimalista**: Menos bugs
+- **Nodos autónomos**: Actualización independiente
+- **Estándares abiertos**: Interoperabilidad
 
 ---
 
@@ -714,15 +1246,81 @@ Esta arquitectura ofrece un equilibrio óptimo entre **seguridad**, **rendimient
 
 OpenRed v3.0 采用**超去中心化**架构，中央API仅作为**发现目录**，每个节点管理自己的安全、加密和直接通信。
 
-## 🎯 主要组件
+## �️ 总体架构
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    OPENRED 中央API                             │
+│                   (最小目录)                                   │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ • 节点ID                                                │   │
+│  │ • 节点API URL                                           │   │
+│  │ • 临时令牌生成服务                                       │   │
+│  │ • 令牌路由到节点                                         │   │
+│  └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+                                   │
+                                   │ 令牌分发
+                                   │
+              ┌────────────────────┼────────────────────┐
+              │                    │                    │
+              ▼                    ▼                    ▼
+    ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+    │   节点A         │  │   节点B         │  │   节点C         │
+    │                 │  │                 │  │                 │
+    │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │
+    │ │ 加密核心    │ │  │ │ 加密核心    │ │  │ │ 加密核心    │ │
+    │ │ 模块        │ │  │ │ 模块        │ │  │ │ 模块        │ │
+    │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │
+    │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │
+    │ │ 令牌        │ │  │ │ 令牌        │ │  │ │ 令牌        │ │
+    │ │ 管理器      │ │  │ │ 管理器      │ │  │ │ 管理器      │ │
+    │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │
+    │ ┌─────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │
+    │ │   P2P API   │ │  │ │   P2P API   │ │  │ │   P2P API   │ │
+    │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │
+    └─────────────────┘  └─────────────────┘  └─────────────────┘
+              │                    │                    │
+              └────────────────────┼────────────────────┘
+                                   │
+                      直接P2P通信
+```
+
+## �🎯 主要组件
 
 ### 1. **OpenRed 中央API**（超极简主义）
 
 #### 📋 职责
 - **目录**：节点ID ↔ API URL存储
-- **令牌生成**：连接建立的临时令牌
+- **令牌生成**：连接建立的临时令牌创建
 - **分发**：自动向相关节点发送令牌
 - **无存储**：无令牌，无用户数据
+
+#### 💾 数据结构
+```python
+{
+    "nodes": {
+        "node_a_id": {
+            "api_url": "https://node-a.example.com/api",
+            "last_seen": "2025-09-22T10:30:00Z",
+            "status": "active"
+        },
+        "node_b_id": {
+            "api_url": "https://node-b.example.com/api", 
+            "last_seen": "2025-09-22T10:25:00Z",
+            "status": "active"
+        }
+    }
+}
+```
+
+#### 🔄 API端点
+```
+POST /api/v3/nodes/register
+POST /api/v3/tokens/request-connection
+GET  /api/v3/nodes/discover
+GET  /api/v3/health
+```
 
 ### 2. **OpenRed 节点**（自主且安全）
 
@@ -731,12 +1329,26 @@ OpenRed v3.0 采用**超去中心化**架构，中央API仅作为**发现目录*
 openred-node/
 ├── core/
 │   ├── crypto_engine/          # 加密引擎
+│   │   ├── methods/
+│   │   │   ├── cipher_alpha.py    # 加密方法A
+│   │   │   ├── cipher_beta.py     # 加密方法B
+│   │   │   ├── cipher_gamma.py    # 加密方法C
+│   │   │   └── cipher_factory.py  # 方法选择器
+│   │   ├── token_processor.py     # 令牌处理器
+│   │   └── validator.py          # 令牌验证器
 │   ├── token_manager/          # 令牌管理器
+│   │   ├── storage.py             # .env存储
+│   │   ├── lifecycle.py           # 令牌生命周期
+│   │   └── sync.py                # 同步
 │   └── p2p_api/               # P2P API
+│       ├── routes.py              # API路由
+│       ├── middleware.py          # 安全中间件
+│       └── handlers.py            # 处理器
 ├── modules/
 │   ├── messaging/             # 消息模块
 │   ├── file_sharing/          # 文件共享模块
-│   └── authentication/        # 高级认证模块
+│   ├── authentication/        # 高级认证模块
+│   └── monitoring/            # 监控模块
 ├── venv/                      # 主虚拟环境
 ├── crypto_venv/               # 隔离加密环境
 ├── .env                       # 环境变量
@@ -750,50 +1362,275 @@ openred-node/
 #### 🎲 基本原理
 每个令牌都用两个不同但数学相关的加密变体生成。
 
+#### 🔄 生成过程
+```python
+def generate_asymmetric_tokens(node_a_id, node_b_id, timestamp):
+    """
+    生成两个不同但加密相关的令牌
+    """
+    # 共同秘密基础
+    base_secret = sha256(f"{node_a_id}:{node_b_id}:{timestamp}").digest()
+    
+    # 节点A的令牌
+    token_a = transform_with_node_salt(base_secret, node_a_id, "variant_alpha")
+    
+    # 节点B的令牌  
+    token_b = transform_with_node_salt(base_secret, node_b_id, "variant_beta")
+    
+    return token_a, token_b
+```
+
+#### 🧮 变换方法
+1. **XOR与唯一salt**：`token ⊕ node_salt`
+2. **循环旋转**：基于node_id的位移
+3. **受控排列**：根据算法重排字节
+4. **级联哈希**：多次哈希与不同种子
+
 ### 2. **交叉验证**
 
-节点可以验证两个不同的令牌是否来自同一源，而无需共享秘密。
+#### 🔍 识别原理
+```python
+def tokens_match(token_a, token_b, node_a_id, node_b_id, timestamp):
+    """
+    验证两个不同令牌是否来自同一源
+    """
+    # 从token_a重构基础秘密
+    reconstructed_from_a = reverse_transform(token_a, node_a_id, "variant_alpha")
+    
+    # 从token_b重构基础秘密
+    reconstructed_from_b = reverse_transform(token_b, node_b_id, "variant_beta")
+    
+    # 比较重构的秘密
+    return reconstructed_from_a == reconstructed_from_b
+```
+
+### 3. **时代加密方法**
+
+#### � 时间选择
+```python
+def select_crypto_method(timestamp):
+    """
+    根据日期/时间选择加密方法
+    """
+    hour = datetime.fromisoformat(timestamp).hour
+    day = datetime.fromisoformat(timestamp).day
+    
+    # 选择示例
+    method_index = (hour + day) % NUMBER_OF_METHODS
+    
+    methods = ["cipher_alpha", "cipher_beta", "cipher_gamma", "cipher_delta"]
+    return methods[method_index]
+```
+
+#### �🔄 方法轮换
+- **每小时**：每小时更换
+- **每日**：按星期几更换
+- **受控随机**：基于timestamp + seed
 
 ## 🔄 通信流程
 
 ### 1. **连接建立**
 
-1. 节点A通过中央API请求连接到节点B
-2. 中央API生成非对称令牌
-3. 中央API将令牌分发给两个节点
-4. 节点建立直接P2P连接
-5. 交叉验证确保安全
+```mermaid
+sequenceDiagram
+    participant NA as 节点A
+    participant CA as 中央API
+    participant NB as 节点B
+    
+    NA->>CA: POST /tokens/request-connection {target: node_b_id}
+    CA->>CA: 生成token_a和token_b
+    CA->>NA: POST /tokens/receive {from: node_b_id, token: token_a}
+    CA->>NB: POST /tokens/receive {from: node_a_id, token: token_b}
+    NA->>NB: POST /p2p/handshake {token: token_a}
+    NB->>NB: 验证tokens_match(token_a, token_b)
+    NB->>NA: 200 OK {session_established: true}
+```
 
 ### 2. **直接P2P通信**
 
-连接建立后，节点直接通信，无需中央干预。
+```mermaid
+sequenceDiagram
+    participant NA as 节点A
+    participant NB as 节点B
+    
+    Note over NA,NB: 通过令牌建立会话
+    
+    NA->>NB: POST /p2p/message {data: encrypted_content}
+    NB->>NA: 200 OK {received: true}
+    
+    NB->>NA: POST /p2p/file-request {file_id: "doc123"}
+    NA->>NB: 200 OK {file_url: "encrypted_link"}
+```
 
 ## 🛡️ 高级安全
 
 ### 1. **环境隔离**
 
-- 主环境：FastAPI、SQLite等
-- 加密环境：仅加密模块，无网络访问
+#### 🔒 加密分离
+```bash
+# 主环境
+/openred-node/venv/
+├── FastAPI, SQLite等
+
+# 隔离加密环境
+/openred-node/crypto_venv/
+├── 仅加密模块
+├── 无网络访问
+├── 可能的Chroot jail
+```
+
+#### 🚧 环境间通信
+```python
+def crypto_operation(data, method):
+    """
+    在隔离环境中执行加密操作
+    """
+    # 通过pipes/Unix套接字通信
+    result = subprocess.run([
+        "crypto_venv/bin/python", 
+        "crypto_engine/processor.py",
+        "--method", method,
+        "--data", data
+    ], capture_output=True, text=True)
+    
+    return result.stdout
+```
 
 ### 2. **安全令牌管理**
 
-- 静态加密令牌
-- 自动轮换
-- 清理过时令牌
+#### 💾 加密.env存储
+```python
+# .env（静态加密）
+NODE_A_TOKEN_ABC123=encrypted:AES256:base64data
+NODE_B_TOKEN_DEF456=encrypted:AES256:base64data
+TOKEN_MASTER_KEY=derived_from_node_secret
+```
+
+#### 🔄 自动轮换
+- **过期**：令牌自动过期
+- **续期**：过期前自动请求
+- **清理**：删除过时令牌
+
+### 3. **审计和监控**
+
+#### 📊 安全日志
+```python
+# 加密和签名的日志
+{
+    "timestamp": "2025-09-22T10:30:00Z",
+    "event": "token_validation", 
+    "node_id": "hashed_node_id",
+    "success": true,
+    "signature": "crypto_signature"
+}
+```
 
 ## 📈 性能和可扩展性
 
 ### 1. **优化**
 
-- 智能缓存
-- 连接池
-- 热加载模块
+#### ⚡ 智能缓存
+```python
+# 缓存验证的令牌
+token_cache = {
+    "node_pair_hash": {
+        "valid_until": timestamp,
+        "crypto_method": "cipher_alpha",
+        "validation_result": True
+    }
+}
+```
+
+#### 🔄 连接池
+```python
+# 可重用P2P连接池
+connection_pool = {
+    "node_id": persistent_connection,
+    "max_connections": 100,
+    "timeout": 300
+}
+```
 
 ### 2. **模块化演进**
 
-- 插件架构
-- 独立模块更新
-- 互操作性开放标准
+#### 🧩 插件架构
+```python
+class OpenRedModule:
+    def register_routes(self, app):
+        pass
+    
+    def register_crypto_methods(self, crypto_engine):
+        pass
+        
+    def register_middleware(self, app):
+        pass
+
+# 热加载模块
+modules = [
+    MessagingModule(),
+    FileSharingModule(), 
+    AuthenticationModule(),
+    CustomModule()
+]
+```
+
+## 🚀 可扩展模块
+
+### 1. **消息模块**
+```python
+# messaging/routes.py
+@router.post("/p2p/message/send")
+async def send_message(message: EncryptedMessage, token: str):
+    # P2P令牌验证
+    # 端到端加密
+    # 直接路由
+    pass
+```
+
+### 2. **文件共享模块**
+```python
+# file_sharing/routes.py  
+@router.post("/p2p/file/share")
+async def share_file(file_request: FileShareRequest, token: str):
+    # 权限验证
+    # 生成临时链接
+    # 文件加密
+    pass
+```
+
+### 3. **认证模块**
+```python
+# authentication/routes.py
+@router.post("/p2p/auth/challenge")
+async def auth_challenge(challenge: AuthChallenge, token: str):
+    # 多因素认证
+    # 可选生物识别
+    # 安全会话
+    pass
+```
+
+## 📋 架构优势
+
+### ✅ **安全性**
+- **零信任**：每个节点独立验证
+- **分布式加密**：无单点故障
+- **隔离**：分离的加密模块
+- **非对称令牌**：无法拦截和重用
+
+### ✅ **性能**  
+- **直接P2P**：无中央瓶颈
+- **智能缓存**：快速验证
+- **按需模块**：只加载所需
+
+### ✅ **可扩展性**
+- **去中心化**：自然水平增长
+- **模块化**：不重构添加功能
+- **独立**：每个节点自治
+
+### ✅ **维护性**
+- **极简中央API**：更少bug
+- **自治节点**：独立更新
+- **开放标准**：互操作性
 
 该架构在**安全性**、**性能**和**简单性**之间提供最佳平衡，同时为OpenRed生态系统实现**最大可扩展性**。
 

@@ -1,53 +1,198 @@
-# OpenRed Federation Protocol (ORF) v1.0
+🌐 **Navigation Multilingue** | **Multilingual Navigation**
+- [🇫🇷 Français](#français) | [🇺🇸 English](#english) | [🇪🇸 Español](#español) | [🇨🇳 中文](#中文)
+
+---
+
+## Français
+
+# OpenRed Federation Protocol (ORF) v3.0
 
 ## Introduction
 
-Le protocole OpenRed Federation (ORF) est le protocole de communication standard entre les nodes OpenRed. Il permet l'échange sécurisé et décentralisé de données entre serveurs utilisateurs tout en maintenant la souveraineté des données.
+Le protocole OpenRed Federation (ORF) v3.0 est le protocole révolutionnaire de communication entre les nœuds OpenRed utilisant un système de **tokens asymétriques** pour la validation croisée sans révélation de données. Il permet des communications P2P directes après découverte via l'API centrale ultra-minimale.
 
-## Principes Fondamentaux
+## Principes Révolutionnaires v3.0
 
-1. **Décentralisation** : Aucun point central de contrôle des communications
-2. **Sécurité** : Authentification cryptographique et chiffrement
-3. **Interopérabilité** : Compatible avec différentes implémentations
-4. **Évolutivité** : Support de versions et extensibilité
-5. **Résilience** : Tolérance aux pannes et retry automatique
+1. **Ultra-Décentralisation** : Communications P2P directes après découverte initiale
+2. **Tokens Asymétriques** : Système révolutionnaire de validation croisée
+3. **Sécurité Maximale** : Validation sans révélation de données sensibles
+4. **Autonomie Complète** : Nœuds fonctionnels sans dépendance centrale
+5. **Scalabilité Infinie** : Architecture distribuée sans goulots d'étranglement
 
-## Architecture du Protocole
+## Architecture Révolutionnaire v3.0
 
-### Transport Layer
-- **Protocole** : HTTP/HTTPS
-- **Format** : JSON
-- **Compression** : gzip (optionnel)
-- **Timeout** : 30 secondes par défaut
+### Phase 1 : Découverte via API Centrale
+- **Endpoint** : `/api/v3/nodes/discover`
+- **Fonction** : Annuaire de nœuds uniquement
+- **Données** : Aucun stockage permanent
+- **Réponse** : Liste des nœuds actifs avec endpoints P2P
 
-### Structure des Messages
+### Phase 2 : Établissement de Tokens Asymétriques
+```json
+{
+  "orf_version": "3.0",
+  "phase": "token_establishment",
+  "node_a": {
+    "id": "node-a-uuid",
+    "endpoint": "https://node-a.example.com:8080",
+    "token_a": "generated-by-node-a",
+    "public_key": "node-a-public-key"
+  },
+  "node_b": {
+    "id": "node-b-uuid", 
+    "endpoint": "https://node-b.example.com:8080",
+    "token_b": "generated-by-central-api",
+    "validation_hash": "mathematical-link-proof"
+  },
+  "crypto_proof": {
+    "algorithm": "asymmetric-validation-v3",
+    "proof": "mathematical-relationship-proof",
+    "timestamp": "2025-09-22T10:30:00.000Z"
+  }
+}
+```
 
-Tous les messages ORF suivent cette structure de base :
+### Phase 3 : Communications P2P Directes
+Une fois les tokens établis, les nœuds communiquent directement :
 
 ```json
 {
-  "orf_version": "1.0",
-  "message_id": "unique-message-identifier",
-  "timestamp": "2025-09-19T10:30:00.000Z",
-  "type": "message_type",
-  "from": {
-    "node_id": "sender-node-id",
-    "server_url": "https://sender-server.com",
-    "username": "sender_username"
-  },
-  "to": {
-    "node_id": "recipient-node-id", 
-    "server_url": "https://recipient-server.com",
-    "username": "recipient_username"
+  "orf_version": "3.0",
+  "phase": "direct_p2p",
+  "message_id": "unique-p2p-message-id",
+  "timestamp": "2025-09-22T10:35:00.000Z",
+  "from": "node-a-uuid",
+  "to": "node-b-uuid",
+  "validation": {
+    "token_a_proof": "cryptographic-proof-a",
+    "token_b_proof": "cryptographic-proof-b",
+    "cross_validation": "success"
   },
   "payload": {
-    // Contenu spécifique au type de message
-  },
-  "security": {
-    "signature": "cryptographic-signature",
-    "public_key_fingerprint": "key-fingerprint",
-    "encryption": "none|aes256"
+    "type": "message|file|notification",
+    "content": "encrypted-payload",
+    "metadata": {...}
   }
+}
+```
+
+---
+
+## English
+
+# OpenRed Federation Protocol (ORF) v3.0
+
+## Introduction
+
+The OpenRed Federation Protocol (ORF) v3.0 is the revolutionary communication protocol between OpenRed nodes using an **asymmetric tokens** system for cross-validation without data revelation. It enables direct P2P communications after discovery via the ultra-minimal central API.
+
+## Revolutionary v3.0 Principles
+
+1. **Ultra-Decentralization**: Direct P2P communications after initial discovery
+2. **Asymmetric Tokens**: Revolutionary cross-validation system
+3. **Maximum Security**: Validation without sensitive data revelation
+4. **Complete Autonomy**: Functional nodes without central dependency
+5. **Infinite Scalability**: Distributed architecture without bottlenecks
+
+## Revolutionary v3.0 Architecture
+
+### Phase 1: Discovery via Central API
+- **Endpoint**: `/api/v3/nodes/discover`
+- **Function**: Node directory only
+- **Data**: No permanent storage
+- **Response**: List of active nodes with P2P endpoints
+
+### Phase 2: Asymmetric Token Establishment
+```json
+{
+  "orf_version": "3.0",
+  "phase": "token_establishment",
+  "node_a": {
+    "id": "node-a-uuid",
+    "endpoint": "https://node-a.example.com:8080",
+    "token_a": "generated-by-node-a",
+    "public_key": "node-a-public-key"
+  },
+  "node_b": {
+    "id": "node-b-uuid", 
+    "endpoint": "https://node-b.example.com:8080",
+    "token_b": "generated-by-central-api",
+    "validation_hash": "mathematical-link-proof"
+  },
+  "crypto_proof": {
+    "algorithm": "asymmetric-validation-v3",
+    "proof": "mathematical-relationship-proof",
+    "timestamp": "2025-09-22T10:30:00.000Z"
+  }
+}
+```
+
+### Phase 3: Direct P2P Communications
+Once tokens are established, nodes communicate directly:
+
+```json
+{
+  "orf_version": "3.0",
+  "phase": "direct_p2p",
+  "message_id": "unique-p2p-message-id",
+  "timestamp": "2025-09-22T10:35:00.000Z",
+  "from": "node-a-uuid",
+  "to": "node-b-uuid",
+  "validation": {
+    "token_a_proof": "cryptographic-proof-a",
+    "token_b_proof": "cryptographic-proof-b",
+    "cross_validation": "success"
+  },
+  "payload": {
+    "type": "message|file|notification",
+    "content": "encrypted-payload",
+    "metadata": {...}
+  }
+}
+```
+
+---
+
+## Español
+
+# Protocolo de Federación OpenRed (ORF) v3.0
+
+## Introducción
+
+El Protocolo de Federación OpenRed (ORF) v3.0 es el protocolo revolucionario de comunicación entre nodos OpenRed utilizando un sistema de **tokens asimétricos** para validación cruzada sin revelación de datos. Permite comunicaciones P2P directas después del descubrimiento a través de la API central ultra-mínima.
+
+## Principios Revolucionarios v3.0
+
+1. **Ultra-Descentralización**: Comunicaciones P2P directas después del descubrimiento inicial
+2. **Tokens Asimétricos**: Sistema revolucionario de validación cruzada
+3. **Seguridad Máxima**: Validación sin revelación de datos sensibles
+4. **Autonomía Completa**: Nodos funcionales sin dependencia central
+5. **Escalabilidad Infinita**: Arquitectura distribuida sin cuellos de botella
+
+---
+
+## 中文
+
+# OpenRed联邦协议 (ORF) v3.0
+
+## 介绍
+
+OpenRed联邦协议(ORF) v3.0是OpenRed节点间的革命性通信协议，使用**非对称令牌**系统进行交叉验证而不泄露数据。它通过超精简中央API发现后实现直接P2P通信。
+
+## 革命性v3.0原则
+
+1. **超去中心化**：初始发现后的直接P2P通信
+2. **非对称令牌**：革命性交叉验证系统
+3. **最大安全性**：无敏感数据泄露的验证
+4. **完全自主**：无中央依赖的功能节点
+5. **无限可扩展性**：无瓶颈的分布式架构
+
+---
+
+🌐 **Navigation** | **导航**
+- [🇫🇷 Français](#français) | [🇺🇸 English](#english) | [🇪🇸 Español](#español) | [🇨🇳 中文](#中文)
+
+**ORF v3.0** - Protocole révolutionnaire | Revolutionary protocol | Protocolo revolucionario | 革命性协议
 }
 ```
 
