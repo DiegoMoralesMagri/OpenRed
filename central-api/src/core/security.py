@@ -4,7 +4,7 @@
 # OpenRed Central API 非对称安全引擎
 
 from typing import Optional, Dict, Any, Tuple
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.backends import default_backend
@@ -87,12 +87,13 @@ class AsymmetricTokenEngine:
         创建带有数学链接的临时令牌
         """
         token_id = secrets.token_urlsafe(32)
-        expiry = datetime.utcnow() + timedelta(seconds=lifetime)
+        now = datetime.now(timezone.utc)
+        expiry = now + timedelta(seconds=lifetime)
         
         token_data = {
             "token_id": token_id,
             "node_id": node_id,
-            "created_at": datetime.utcnow().isoformat(),
+            "created_at": now.isoformat(),
             "expires_at": expiry.isoformat(),
             "status": "active"
         }
@@ -141,7 +142,7 @@ class AsymmetricTokenEngine:
         )
     
     def _create_mathematical_link(self, token_id: str, node_id: str) -> str:
-        combined = f"{token_id}:{node_id}:{datetime.utcnow().timestamp()}"
+        combined = f"{token_id}:{node_id}:{datetime.now(timezone.utc).timestamp()}"
         hash_value = hashlib.sha256(combined.encode()).hexdigest()
         return hash_value
     
@@ -167,17 +168,23 @@ class AsymmetricTokenEngine:
     def _is_token_valid(self, token_data: Dict[str, Any]) -> bool:
         try:
             expiry = datetime.fromisoformat(token_data["expires_at"])
-            return datetime.utcnow() < expiry and token_data["status"] == "active"
+            # Ensure both datetimes are timezone-aware for comparison
+            if expiry.tzinfo is None:
+                expiry = expiry.replace(tzinfo=timezone.utc)
+            now = datetime.now(timezone.utc)
+            return now < expiry and token_data["status"] == "active"
         except:
             return False
     
     def cleanup_expired_tokens(self):
-        current_time = datetime.utcnow()
+        current_time = datetime.now(timezone.utc)
         expired_tokens = []
         
         for token_id, token_data in self.token_store.items():
             try:
                 expiry = datetime.fromisoformat(token_data["expires_at"])
+                if expiry.tzinfo is None:
+                    expiry = expiry.replace(tzinfo=timezone.utc)
                 if current_time >= expiry:
                     expired_tokens.append(token_id)
             except:
