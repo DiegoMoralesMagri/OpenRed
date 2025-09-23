@@ -14,6 +14,8 @@ venv/
 actionslog.md
 GUIDE_PUBLICATION_GITHUB.md
 guide-simple.md
+P2P_ASYMMETRIC_TOKENS.md
+P2P_LOCAL_TOKENS.md
 
 # Test and debugging files (do not commit)
 test_wsgi.py
