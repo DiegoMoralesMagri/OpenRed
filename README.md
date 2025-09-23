@@ -82,7 +82,7 @@ L'API centrale dans `central-api/` est **officiellement abandonnée** depuis sep
 ### � Communauté
 - **Issues** : [GitHub Issues](https://github.com/DiegoMoralesMagri/OpenRed/issues)
 - **Discussions** : [GitHub Discussions](https://github.com/DiegoMoralesMagri/OpenRed/discussions)
-- **Contact** : diego.morales.magri@gmail.com
+- **Contact** : community@o-red.org
 
 ---
 
@@ -358,9 +358,3 @@ Nous, utilisateurs et développeurs d'O-Red, déclarons que :
 ---
 
 **Rejoignez la révolution. Reprenez le contrôle. Construisons ensemble l'avenir numérique que nous méritons.**
-
-🌐 **Site Web** : https://o-red.org  
-💬 **Discord** : https://discord.gg/ored  
-🐙 **GitHub** : https://github.com/o-red  
-🐦 **Twitter** : @ORedProject  
-📧 **Contact** : hello@o-red.org
