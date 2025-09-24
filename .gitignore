@@ -49,6 +49,9 @@ uploads/
 openred_uploads/
 user_uploads/
 
+# Anti-capture research (keep innovations secret)
+anti-capture-research/
+
 # SSL certificates and keys
 *.pem
 *.key
