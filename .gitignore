@@ -8,6 +8,42 @@ env/
 venv/
 .venv/
 .env
+
+# Fichiers de recherche et développement expérimental anti-capture/anti-caméra
+phantom-images-demo/anti_camera_patterns.py
+phantom-images-demo/anti_capture_composer.py
+phantom-images-demo/anti_screenshot_protection.py
+phantom-images-demo/demo_anti_capture.py
+phantom-images-demo/focus_protection.py
+phantom-images-demo/hybrid_protection.py
+phantom-images-demo/hybrid_protection_interface.py
+phantom-images-demo/hybrid_protection_system.py
+phantom-images-demo/invisible_anticamera_pattern.py
+phantom-images-demo/netflix_style_drm_protection.py
+phantom-images-demo/phantom_drm_anticamera_system.py
+phantom-images-demo/phantom_drm_protection.py
+phantom-images-demo/spec_compliant_anticamera.py
+phantom-images-demo/super_anti_screenshot.py
+phantom-images-demo/test_anti_capture_suite.py
+phantom-images-demo/test_protection_complete.py
+phantom-images-demo/test_quick_validation.py
+phantom-images-demo/true_aliasing_anticamera_pattern.py
+phantom-images-demo/ultrafine_total_protection.py
+
+# Versions expérimentales des fichiers officiels
+phantom-images-demo/orp_viewer_experimental.py
+phantom-images-demo/orp_viewer_clean.py
+
+# Dossiers de sortie temporaires
+phantom-images-demo/demo_output/
+
+# Fichiers de test temporaires  
+phantom-images-demo/demo_source.jpg
+phantom-images-demo/test_ocean_fixed.orp
+
+# Fichiers de recherche au niveau racine (si applicable)
+BUSINESS_STRATEGY_FAQ.md
+phantom-images-demo/PATENT_PROTECTION_STRATEGY.md
 .env.local
 
 # Private local files
