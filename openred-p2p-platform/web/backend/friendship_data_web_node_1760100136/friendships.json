@@ -1,0 +1,27 @@
+{
+  "c8328e9d75244f3c": {
+    "friend_fingerprint": "c8328e9d75244f3c",
+    "friend_node_id": "web_node_2",
+    "status": "pending_sent",
+    "permissions_granted": {
+      "messaging": true,
+      "urn_access": true,
+      "photo_sharing": false,
+      "file_sharing": false,
+      "presence_info": true,
+      "custom_permissions": {}
+    },
+    "permissions_received": {
+      "messaging": false,
+      "urn_access": false,
+      "photo_sharing": false,
+      "file_sharing": false,
+      "presence_info": false,
+      "custom_permissions": {}
+    },
+    "created_at": 1760100165.965013,
+    "last_interaction": 1760100165.9650135,
+    "trust_score": 1.0,
+    "notes": ""
+  }
+}

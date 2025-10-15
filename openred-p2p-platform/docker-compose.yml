@@ -1,0 +1,158 @@
+# === OpenRed P2P Platform - Docker Compose ===
+# Orchestration complète pour déploiement facilité
+
+version: '3.8'
+
+services:
+  # Nœud P2P principal
+  openred-node:
+    build: .
+    image: openred/p2p-platform:latest
+    container_name: openred-p2p-node
+    hostname: openred-node
+    restart: unless-stopped
+    
+    # Configuration réseau pour UDP multicast
+    network_mode: host
+    
+    # Variables d'environnement
+    environment:
+      - OPENRED_NODE_ID=${OPENRED_NODE_ID:-auto}
+      - OPENRED_SECTOR=${OPENRED_SECTOR:-general}
+      - OPENRED_P2P_PORT=${OPENRED_P2P_PORT:-8080}
+      - OPENRED_WEB_PORT=${OPENRED_WEB_PORT:-8000}
+      - PYTHONUNBUFFERED=1
+    
+    # Volumes persistants
+    volumes:
+      - openred_data:/data
+      - openred_cache:/data/phantom_urn_cache
+      - openred_urns:/data/urn-files
+      - openred_logs:/data/logs
+      - ./urn-files:/data/urn-files:ro  # URN locaux en lecture seule
+    
+    # Santé du container
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    
+    # Commande par défaut
+    command: ["start-node"]
+    
+    # Labels pour identification
+    labels:
+      - "openred.component=p2p-node"
+      - "openred.version=1.0.0"
+      - "openred.description=Revolutionary P2P Node"
+
+  # Nœud secondaire pour test constellation (optionnel)
+  openred-node-2:
+    build: .
+    image: openred/p2p-platform:latest
+    container_name: openred-p2p-node-2
+    hostname: openred-node-2
+    restart: unless-stopped
+    profiles: ["multi-node"]  # Activé seulement avec --profile multi-node
+    
+    network_mode: host
+    
+    environment:
+      - OPENRED_NODE_ID=${OPENRED_NODE_ID_2:-node_secondary}
+      - OPENRED_SECTOR=${OPENRED_SECTOR:-general}
+      - OPENRED_P2P_PORT=8081
+      - OPENRED_WEB_PORT=8001
+      - PYTHONUNBUFFERED=1
+    
+    volumes:
+      - openred_data_2:/data
+      - openred_cache_2:/data/phantom_urn_cache
+      - openred_logs_2:/data/logs
+    
+    command: ["start-node"]
+    
+    labels:
+      - "openred.component=p2p-node-secondary"
+      - "openred.role=test"
+
+  # Service de monitoring (optionnel)
+  openred-monitor:
+    build: .
+    image: openred/p2p-platform:latest
+    container_name: openred-monitor
+    hostname: openred-monitor
+    restart: unless-stopped
+    profiles: ["monitoring"]
+    
+    network_mode: host
+    
+    environment:
+      - OPENRED_NODE_ID=monitor_node
+      - OPENRED_SECTOR=monitoring
+      - OPENRED_P2P_PORT=8082
+      - PYTHONUNBUFFERED=1
+    
+    volumes:
+      - openred_monitor_data:/data
+    
+    command: ["interactive"]
+    
+    labels:
+      - "openred.component=monitor"
+
+# Volumes nommés pour persistance
+volumes:
+  openred_data:
+    driver: local
+    labels:
+      - "openred.volume=main-data"
+  
+  openred_cache:
+    driver: local
+    labels:
+      - "openred.volume=phantom-cache"
+  
+  openred_urns:
+    driver: local
+    labels:
+      - "openred.volume=urn-storage"
+  
+  openred_logs:
+    driver: local
+    labels:
+      - "openred.volume=logs"
+  
+  # Volumes nœud secondaire
+  openred_data_2:
+    driver: local
+    labels:
+      - "openred.volume=secondary-data"
+  
+  openred_cache_2:
+    driver: local
+    labels:
+      - "openred.volume=secondary-cache"
+  
+  openred_logs_2:
+    driver: local
+    labels:
+      - "openred.volume=secondary-logs"
+  
+  # Volume monitoring
+  openred_monitor_data:
+    driver: local
+    labels:
+      - "openred.volume=monitor-data"
+
+# Configuration réseau (si pas host mode)
+networks:
+  openred-network:
+    driver: bridge
+    enable_ipv6: false
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+    labels:
+      - "openred.network=p2p-network"

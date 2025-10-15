@@ -1,0 +1,52 @@
+{
+  "942b06132285ccd1": {
+    "friend_fingerprint": "942b06132285ccd1",
+    "friend_node_id": "web_node_2",
+    "status": "accepted",
+    "permissions_granted": {
+      "messaging": true,
+      "urn_access": false,
+      "photo_sharing": false,
+      "file_sharing": false,
+      "presence_info": false,
+      "custom_permissions": {}
+    },
+    "permissions_received": {
+      "messaging": true,
+      "urn_access": true,
+      "photo_sharing": false,
+      "file_sharing": false,
+      "presence_info": true,
+      "custom_permissions": {}
+    },
+    "created_at": 1760199923.8604171,
+    "last_interaction": 1760199935.755161,
+    "trust_score": 1.0,
+    "notes": ""
+  },
+  "c5be0178c75ce6ae": {
+    "friend_fingerprint": "c5be0178c75ce6ae",
+    "friend_node_id": "web_node_2",
+    "status": "pending_sent",
+    "permissions_granted": {
+      "messaging": true,
+      "urn_access": true,
+      "photo_sharing": false,
+      "file_sharing": false,
+      "presence_info": true,
+      "custom_permissions": {}
+    },
+    "permissions_received": {
+      "messaging": false,
+      "urn_access": false,
+      "photo_sharing": false,
+      "file_sharing": false,
+      "presence_info": false,
+      "custom_permissions": {}
+    },
+    "created_at": 1760200512.8262365,
+    "last_interaction": 1760200512.8262365,
+    "trust_score": 1.0,
+    "notes": ""
+  }
+}

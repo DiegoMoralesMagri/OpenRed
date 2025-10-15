@@ -1,0 +1,26 @@
+[
+  {
+    "group_id": "friends",
+    "name": "Amis",
+    "description": "Amis proches",
+    "color": "#4CAF50",
+    "members": [],
+    "created_at": 1760179288.8897178
+  },
+  {
+    "group_id": "family",
+    "name": "Famille",
+    "description": "Membres de la famille",
+    "color": "#FF5722",
+    "members": [],
+    "created_at": 1760179288.889722
+  },
+  {
+    "group_id": "professional",
+    "name": "Professionnel",
+    "description": "Contacts professionnels",
+    "color": "#2196F3",
+    "members": [],
+    "created_at": 1760179288.8897235
+  }
+]

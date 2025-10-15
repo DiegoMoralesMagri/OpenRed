@@ -60,7 +60,7 @@ Diego Morales Magri's vision of **"Security as a fundamental right, not a privil
 - **5 Major Technology Categories** with revolutionary approaches
 - **Multiple Patent-Worthy Innovations** released as defensive publications
 - **Open Source Leadership** demonstrating altruistic tech innovation
-- **Community Foundation** for collaborative security advancement
+- **Community Foundation** for collaborative decentralized digital environment with security and data protection advancement
 
 ### **🏅 Technical Expertise Demonstrated**
 - **Cryptographic Innovation**: Advanced encryption and fragmentation techniques
@@ -73,7 +73,7 @@ Diego Morales Magri's vision of **"Security as a fundamental right, not a privil
 ## 🤝 **Community Contributors**
 
 ### **💬 How to Contribute**
-The OpenRed Project welcomes contributions from the global security community:
+The OpenRed Project welcomes contributions from the global decentralised digital environment and security community:
 
 #### **👩‍💻 Technical Contributors**
 - **Code Development**: Enhance existing systems or create new modules
@@ -99,8 +99,8 @@ The OpenRed Project welcomes contributions from the global security community:
 
 ### **🎓 Academic Citation Format**
 ```
-Morales Magri, D. (2025). OpenRed Security Innovation Suite: Revolutionary 
-Approaches to Distributed Security and Image Protection. GitHub Repository.
+Morales Magri, D. (2025). OpenRed Community Innovation Suite: Revolutionary 
+Decentralized Digital Environment Approaches to Distributed Security and Data Protection. GitHub Repository.
 https://github.com/DiegoMoralesMagri/OpenRed
 ```
 
@@ -110,15 +110,15 @@ Organizations implementing OpenRed technologies should recognize:
 
 ### **📰 Media & Conference Attribution**  
 When presenting or discussing OpenRed innovations:
-> *"OpenRed's revolutionary security concepts were invented and first implemented by Diego Morales Magri in September 2025"*
+> *"OpenRed's revolutionary decentralized digital environment with inovated security concepts were invented and first implemented by Diego Morales Magri in September 2025"*
 
 ---
 
 ## 🌟 **Legacy & Vision**
 
-**Diego Morales Magri's** OpenRed Project represents a paradigm shift in security thinking:
+**Diego Morales Magri's** OpenRed Project represents a paradigm shift in community thinking:
 
-- **🔓 Open Innovation**: Proving that revolutionary security can be both free and profitable
+- **🔓 Open Innovation**: Proving that revolutionary decentralized digital environment can be both free and profitable
 - **🛡️ User Empowerment**: Making advanced security accessible to everyone
 - **🌍 Global Impact**: Creating tools for privacy protection worldwide  
 - **🚀 Future Foundation**: Establishing principles for next-generation security

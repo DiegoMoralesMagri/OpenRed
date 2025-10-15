@@ -80,7 +80,7 @@ OpenRed/
 
 ```powershell
 # Naviguer vers le projet
-cd "C:\Users\Diego\Documents\OpenRed"
+cd "C:\Users\Documents\OpenRed"
 
 # Initialiser git si pas déjà fait
 git init
@@ -186,7 +186,7 @@ git push -u origin main
 
 4. **About** (en haut à droite) :
    - **Description** : `Écosystème décentralisé du futur - Alternative éthique aux géants du web`
-   - **Website** : `https://ored-community.org` (quand disponible)
+   - **Website** : `https://o-red.org` (quand disponible)
    - **Topics** : `decentralized`, `p2p`, `ai`, `privacy`, `ethereum`, `web3`, `fastapi`, `react`, `typescript`
 
 ### Étape 6: Création de Discussions et Issues Initiales

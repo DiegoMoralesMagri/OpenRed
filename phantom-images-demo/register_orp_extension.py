@@ -16,7 +16,7 @@ def register_orp_extension():
     
     # Chemins
     current_dir = Path(__file__).parent
-    viewer_path = current_dir / "orp_viewer.py"
+    viewer_path = current_dir / "orp_viewer.py"  # Viewer principal (ex-WebSocket transition)
     python_exe = sys.executable
     
     if not viewer_path.exists():
@@ -30,7 +30,7 @@ def register_orp_extension():
         
         # Clé pour le type de fichier
         with winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\OpenRedPhantom") as key:
-            winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "Fichier OpenRed Phantom")
+            winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "Fichier OpenRed PHANTOM (URN + WebSocket Support)")
         
         # Icône (optionnel)
         with winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\OpenRedPhantom\DefaultIcon") as key:

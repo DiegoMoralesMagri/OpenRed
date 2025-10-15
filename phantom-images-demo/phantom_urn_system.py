@@ -506,7 +506,7 @@ def demo_ash_system():
     test_image.save("test_image.png")
     
     print("\n🔥 Phase 1: Combustion image...")
-    burn_result = ash_system.create_urn("test_image.png", "node_B")
+    burn_result = ash_system.create_urn("atno10.png", "node_B")
     
     print(f"✅ URN créée: {burn_result['urn_id']}")
     print(f"📊 Fragments: {burn_result['total_fragments']}")
