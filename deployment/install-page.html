@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 OpenRed - Installation One-Click</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header {
+            margin-bottom: 3rem;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .install-section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .install-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffeb3b;
+        }
+        
+        .command-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #45a049;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .downloads {
+            margin: 2rem 0;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin: 0.5rem;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .download-btn.secondary {
+            background: #2196F3;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+            margin: 0.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffeb3b;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .footer {
+            margin-top: 3rem;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                font-size: 3rem;
+            }
+            
+            .command-box {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🌐</div>
+            <h1>OpenRed</h1>
+            <div class="subtitle">Installation One-Click pour Hébergement Mutualisé</div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">6.6KB</div>
+                <div class="stat-label">Package Léger</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">30s</div>
+                <div class="stat-label">Installation</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">✅</div>
+                <div class="stat-label">Tous Hébergeurs</div>
+            </div>
+        </div>
+        
+        <div class="install-section">
+            <div class="install-title">🚀 Installation Linux/Mac</div>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyToClipboard('bash-cmd')">Copier</button>
+                <span id="bash-cmd">curl -fsSL https://raw.githubusercontent.com/ph3n4t3s/OpenRed/main/deployment/install-openred-shared.sh | bash</span>
+            </div>
+        </div>
+        
+        <div class="install-section">
+            <div class="install-title">🖥️ Installation Windows PowerShell</div>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyToClipboard('ps-cmd')">Copier</button>
+                <span id="ps-cmd">iwr -useb https://raw.githubusercontent.com/ph3n4t3s/OpenRed/main/deployment/install-openred-shared.ps1 | iex</span>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🌐</div>
+                <h3>Hébergement Mutualisé</h3>
+                <p>Compatible OVH, O2Switch, 1&1, Hostinger</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Installation Rapide</h3>
+                <p>30 secondes pour être opérationnel</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔧</div>
+                <h3>Configuration Auto</h3>
+                <p>Permissions et CGI configurés automatiquement</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <h3>Interface Responsive</h3>
+                <p>Fonctionne sur tous les appareils</p>
+            </div>
+        </div>
+        
+        <div class="downloads">
+            <h2>📦 Téléchargements Directs</h2>
+            <a href="https://raw.githubusercontent.com/ph3n4t3s/OpenRed/main/deployment/openred-shared-hosting.zip" class="download-btn">
+                📁 Package Hébergement (6.6KB)
+            </a>
+            <a href="https://raw.githubusercontent.com/ph3n4t3s/OpenRed/main/deployment/openred-complete.zip" class="download-btn secondary">
+                📦 Package Complet (951KB)
+            </a>
+        </div>
+        
+        <div class="install-section">
+            <div class="install-title">🔧 Hébergeurs Compatibles</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div>✅ <strong>OVH</strong><br>Shared Pro</div>
+                <div>✅ <strong>O2Switch</strong><br>Hébergement Web</div>
+                <div>✅ <strong>1&1 IONOS</strong><br>Essential/Business</div>
+                <div>✅ <strong>Hostinger</strong><br>Premium/Business</div>
+                <div>✅ <strong>Gandi</strong><br>Simple Hosting</div>
+                <div>✅ <strong>Autres</strong><br>Support CGI/Python</div>
+            </div>
+        </div>
+        
+        <div class="install-section">
+            <div class="install-title">📋 Guide d'Installation Manuel</div>
+            <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                <ol style="line-height: 1.8;">
+                    <li>Téléchargez le package hébergement mutualisé</li>
+                    <li>Décompressez le fichier ZIP sur votre ordinateur</li>
+                    <li>Uploadez tous les fichiers via FTP/SFTP</li>
+                    <li>Définissez les permissions : dossiers 755, fichiers 644</li>
+                    <li>Accédez à votre site - OpenRed est prêt !</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🎯 OpenRed - Solution P2P pour hébergement mutualisé</p>
+            <p>📖 <a href="https://github.com/ph3n4t3s/OpenRed" style="color: #ffeb3b;">Documentation complète sur GitHub</a></p>
+        </div>
+    </div>
+    
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(function() {
+                // Feedback visuel
+                const btn = element.parentNode.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copié !';
+                btn.style.background = '#4CAF50';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#4CAF50';
+                }, 2000);
+            });
+        }
+        
+        // Animation des statistiques au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach((stat, index) => {
+                stat.style.opacity = '0';
+                stat.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    stat.style.transition = 'all 0.6s ease';
+                    stat.style.opacity = '1';
+                    stat.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>

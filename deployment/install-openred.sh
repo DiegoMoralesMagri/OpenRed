@@ -44,20 +44,54 @@ install_openred() {
     mkdir -p "$INSTALL_DIR"
     cd "$INSTALL_DIR"
     
-    # Télécharger le package
-    if command -v curl &> /dev/null; then
-        curl -sL "https://github.com/DiegoMoralesMagri/OpenRed/releases/latest/download/openred-complete.zip" -o openred.zip
-    elif command -v wget &> /dev/null; then
-        wget -q "https://github.com/DiegoMoralesMagri/OpenRed/releases/latest/download/openred-complete.zip" -O openred.zip
-    else
-        echo "❌ curl ou wget requis"
+    # URLs de téléchargement (avec fallback)
+    DOWNLOAD_URLS=(
+        "https://github.com/DiegoMoralesMagri/OpenRed/raw/main/deployment/openred-complete.zip"
+        "https://github.com/DiegoMoralesMagri/OpenRed/releases/latest/download/openred-complete.zip"
+        "https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/openred-complete.zip"
+    )
+    
+    # Télécharger le package avec fallback
+    DOWNLOAD_SUCCESS=false
+    for url in "${DOWNLOAD_URLS[@]}"; do
+        log "Tentative de téléchargement depuis: $url"
+        if command -v curl &> /dev/null; then
+            if curl -sL "$url" -o openred.zip && [[ -s openred.zip ]]; then
+                DOWNLOAD_SUCCESS=true
+                break
+            fi
+        elif command -v wget &> /dev/null; then
+            if wget -q "$url" -O openred.zip && [[ -s openred.zip ]]; then
+                DOWNLOAD_SUCCESS=true
+                break
+            fi
+        fi
+        log "Échec du téléchargement depuis $url"
+    done
+    
+    if [[ "$DOWNLOAD_SUCCESS" != true ]]; then
+        echo "❌ Impossible de télécharger OpenRed"
+        echo "📋 Solutions alternatives:"
+        echo "   1. Téléchargez manuellement: https://github.com/DiegoMoralesMagri/OpenRed/archive/main.zip"
+        echo "   2. Clonez le repo: git clone https://github.com/DiegoMoralesMagri/OpenRed.git"
         exit 1
     fi
     
+    # Vérifier l'intégrité du fichier ZIP
+    if ! unzip -t openred.zip &>/dev/null; then
+        echo "❌ Fichier ZIP corrompu"
+        rm -f openred.zip
+        exit 1
+    fi
+    
+    success "Package téléchargé avec succès"
+    
     # Extraire
     if command -v unzip &> /dev/null; then
+        log "Extraction du package..."
         unzip -q openred.zip
         rm openred.zip
+        success "Extraction terminée"
     else
         echo "❌ unzip requis"
         exit 1

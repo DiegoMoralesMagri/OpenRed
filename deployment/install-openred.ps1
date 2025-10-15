@@ -33,19 +33,44 @@ function Install-OpenRed {
     New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
     Set-Location $InstallDir
     
-    # Télécharger
-    $packageUrl = "https://github.com/DiegoMoralesMagri/OpenRed/releases/latest/download/openred-complete.zip"
+    # URLs de téléchargement (avec fallback)
+    $packageUrls = @(
+        "https://github.com/DiegoMoralesMagri/OpenRed/raw/main/deployment/openred-complete.zip",
+        "https://github.com/DiegoMoralesMagri/OpenRed/releases/latest/download/openred-complete.zip",
+        "https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/openred-complete.zip"
+    )
     $packageFile = "openred.zip"
     
+    # Télécharger avec fallback
+    $downloadSuccess = $false
+    foreach ($url in $packageUrls) {
+        try {
+            Log "Tentative de téléchargement depuis: $url"
+            (New-Object System.Net.WebClient).DownloadFile($url, $packageFile)
+            if ((Get-Item $packageFile).Length -gt 0) {
+                $downloadSuccess = $true
+                break
+            }
+        } catch {
+            Log "Échec du téléchargement depuis $url"
+        }
+    }
+    
+    if (-not $downloadSuccess) {
+        Write-Host "❌ Impossible de télécharger OpenRed" -ForegroundColor Red
+        Write-Host "📋 Solutions alternatives:" -ForegroundColor Yellow
+        Write-Host "   1. Téléchargez manuellement: https://github.com/DiegoMoralesMagri/OpenRed/archive/main.zip"
+        Write-Host "   2. Clonez le repo: git clone https://github.com/DiegoMoralesMagri/OpenRed.git"
+        return
+    }
+    
     try {
-        (New-Object System.Net.WebClient).DownloadFile($packageUrl, $packageFile)
-        
-        # Extraire
+        # Vérifier l'intégrité et extraire
         Add-Type -AssemblyName System.IO.Compression.FileSystem
         [System.IO.Compression.ZipFile]::ExtractToDirectory($packageFile, ".")
         Remove-Item $packageFile
         
-        Success "OpenRed installé !"
+        Success "OpenRed installé avec succès !"
     } catch {
         Write-Error "Erreur d'installation: $_"
     }
