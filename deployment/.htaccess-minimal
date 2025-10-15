@@ -1,0 +1,14 @@
+# OpenRed - Configuration minimaliste pour hébergement mutualisé
+# Version ultra-compatible
+
+# Page d'accueil
+DirectoryIndex index.html
+
+# Protection basique
+<Files "*.json">
+    Deny from all
+</Files>
+
+<Files "*.md">
+    Deny from all
+</Files>

@@ -459,46 +459,42 @@ votre-site.com/
         zipf.writestr("README.md", readme_shared)
         print("  + README.md")
         
-        # 7. Fichier .htaccess pour Apache
-        htaccess = '''# OpenRed - Configuration Apache pour hébergement mutualisé
+        # 7. Fichier .htaccess pour Apache (compatible hébergement mutualisé)
+        htaccess = '''# OpenRed - Configuration compatible hébergement mutualisé
+# Version corrigée pour O2Switch et autres hébergeurs
 
-# Activer CGI pour les fichiers .cgi
-AddHandler cgi-script .cgi
-Options +ExecCGI
-
-# Redirection vers l'interface
+# Page d'accueil
 DirectoryIndex index.html
 
 # Configuration MIME
 AddType application/json .json
-
-# Headers de sécurité
-<IfModule mod_headers.c>
-    Header always set X-Content-Type-Options nosniff
-    Header always set X-Frame-Options DENY
-    Header always set X-XSS-Protection "1; mode=block"
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-</IfModule>
-
-# Compression
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
-</IfModule>
-
-# Cache
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType image/png "access plus 1 month"
-    ExpiresByType image/jpg "access plus 1 month"
-    ExpiresByType image/jpeg "access plus 1 month"
-</IfModule>
+AddType text/html .html
 
 # Protection des fichiers sensibles
-<Files "config.json">
+<Files "*.json">
     Order Allow,Deny
     Deny from all
+</Files>
+
+<Files "*.md">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Accès autorisé aux fichiers web
+<Files "index.html">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "*.css">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "*.js">
+    Order Allow,Deny
+    Allow from all
 </Files>
 '''
         
