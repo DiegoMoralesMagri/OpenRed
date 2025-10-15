@@ -9,8 +9,8 @@ param(
 # Configuration
 $ErrorActionPreference = "Stop"
 $PackageUrls = @(
-    "https://raw.githubusercontent.com/ph3n4t3s/OpenRed/main/deployment/openred-shared-hosting.zip",
-    "https://github.com/ph3n4t3s/OpenRed/raw/main/deployment/openred-shared-hosting.zip"
+    "https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/openred-shared-hosting.zip",
+    "https://github.com/DiegoMoralesMagri/OpenRed/raw/main/deployment/openred-shared-hosting.zip"
 )
 $PackageFile = "openred-shared-hosting.zip"
 

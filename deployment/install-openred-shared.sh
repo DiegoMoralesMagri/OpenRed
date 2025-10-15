@@ -8,7 +8,7 @@ echo "🌐 OpenRed - Installation Hébergement Mutualisé"
 echo "================================================"
 
 # Configuration
-PACKAGE_URL="https://raw.githubusercontent.com/ph3n4t3s/OpenRed/main/deployment/openred-shared-hosting.zip"
+PACKAGE_URL="https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/openred-shared-hosting.zip"
 PACKAGE_FILE="openred-shared-hosting.zip"
 INSTALL_DIR="."
 
@@ -75,8 +75,8 @@ download_package() {
     
     # URLs de fallback
     URLS=(
-        "https://raw.githubusercontent.com/ph3n4t3s/OpenRed/main/deployment/openred-shared-hosting.zip"
-        "https://github.com/ph3n4t3s/OpenRed/raw/main/deployment/openred-shared-hosting.zip"
+        "https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/openred-shared-hosting.zip"
+        "https://github.com/DiegoMoralesMagri/OpenRed/raw/main/deployment/openred-shared-hosting.zip"
     )
     
     for url in "${URLS[@]}"; do
