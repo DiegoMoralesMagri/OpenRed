@@ -1,0 +1,23 @@
+🌐 ENREGISTREMENT DNS - EXEMPLE
+===============================
+
+Pour résolution DNS mondiale:
+
+1. 📡 Domaine nécessaire:
+   Vous devez posséder un domaine (ex: mondomaine.com)
+
+2. 🔧 Enregistrement TXT à créer:
+   Nom: fort_VOTRE_ID_FORT.openred.mondomaine.com
+   Valeur: "ip=VOTRE_IP_PUBLIQUE;port=5000"
+
+3. 🌍 Alternative domaine public:
+   Demander ajout dans openred.network:
+   fort_VOTRE_ID_FORT.openred.network → VOTRE_IP:PORT
+
+4. ✅ Test de résolution:
+   nslookup -type=TXT fort_VOTRE_ID_FORT.openred.network
+
+Remplacez:
+- VOTRE_ID_FORT par l'ID de votre fort
+- VOTRE_IP_PUBLIQUE par votre IP publique
+- PORT par votre port configuré

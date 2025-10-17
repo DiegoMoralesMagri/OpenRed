@@ -1,0 +1,39 @@
+{
+  "timestamp": "2025-10-17T22:14:59.336093",
+  "conformite_manifeste": false,
+  "tests_passes": 5,
+  "violations_detectees": 21,
+  "details": {
+    "tests_reussis": [
+      "DHT P2P fonctionnel",
+      "Résolveur sans dépendances géants",
+      "Résolveur conforme manifeste",
+      "Résistance blocage services centralisés",
+      "Seeds sans géants"
+    ],
+    "violations": [
+      "Dépendance github.com dans .\\test_conformite_manifeste.py",
+      "Dépendance api.github.com dans .\\test_conformite_manifeste.py",
+      "Dépendance icloud.com dans .\\test_conformite_manifeste.py",
+      "Dépendance amazon.com dans .\\test_conformite_manifeste.py",
+      "Dépendance meta.com dans .\\test_conformite_manifeste.py",
+      "Dépendance facebook.com dans .\\test_conformite_manifeste.py",
+      "Dépendance amazonaws.com dans .\\test_conformite_manifeste.py",
+      "Dépendance raw.githubusercontent.com dans .\\test_conformite_manifeste.py",
+      "Dépendance 8.8.8.8 dans .\\test_conformite_manifeste.py",
+      "Dépendance microsoft.com dans .\\test_conformite_manifeste.py",
+      "Dépendance aws.com dans .\\test_conformite_manifeste.py",
+      "Dépendance azure.com dans .\\test_conformite_manifeste.py",
+      "Dépendance live.com dans .\\test_conformite_manifeste.py",
+      "Dépendance cloudflare.com dans .\\test_conformite_manifeste.py",
+      "Dépendance 1.1.1.1 dans .\\test_conformite_manifeste.py",
+      "Dépendance googledns.com dans .\\test_conformite_manifeste.py",
+      "Dépendance googleapis.com dans .\\test_conformite_manifeste.py",
+      "Dépendance google.com dans .\\test_conformite_manifeste.py",
+      "Dépendance apple.com dans .\\test_conformite_manifeste.py",
+      "Connexion détectée vers github.com",
+      "Connexion détectée vers 1.1.1.1"
+    ]
+  },
+  "verdict": "❌ VIOLATIONS DÉTECTÉES"
+}

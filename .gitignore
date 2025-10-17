@@ -1,0 +1,45 @@
+# Fichiers Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Données personnelles OpenRed
+.openred_fort/
+*.key
+.cle_*
+identite_fort.json
+historique.json
+connexions_p2p.json
+
+# Fichiers de registres avec données réelles
+forts_registry.json
+registry_mondial.json
+*_registry_*.json
+
+# Instructions avec données sensibles
+instructions_*_fort_*.json
+instructions_*_fort_*.txt
+
+# Fichiers temporaires
+*.tmp
+*.temp
+.cache/
+temp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
