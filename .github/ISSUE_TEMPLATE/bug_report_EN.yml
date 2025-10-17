@@ -1,0 +1,140 @@
+name: Bug Report
+description: Report a bug in O-Red
+title: "[BUG] "
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report a bug! This helps us improve O-Red.
+
+        Before submitting, please check that the issue hasn't already been reported in the [existing issues](../issues).
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug description
+      description: A clear and concise description of the problem
+      placeholder: "Describe what is not working..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: How to reproduce the issue
+      placeholder: |
+        1. Go to '...'
+        2. Click '...'
+        3. Scroll to '...'
+        4. See the error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should happen
+      placeholder: "I expected..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happens
+      placeholder: "Instead, I saw..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected component
+      description: Which O-Red component is affected?
+      options:
+        - Central API (FastAPI)
+        - Web Interface (React)
+        - Node P2P Client
+        - O-RedMind (AI)
+        - O-RedStore (Marketplace)
+        - O-RedOffice (Office Suite)
+        - O-RedSearch (Search Engine)
+        - Documentation
+        - Deployment scripts
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How much does this bug affect usage?
+      options:
+        - Critical (blocks usage)
+        - High (major feature broken)
+        - Medium (minor inconvenience)
+        - Low (cosmetic)
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: "e.g. Windows 11, Ubuntu 20.04, macOS 12.0"
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser (if applicable)
+      placeholder: "e.g. Chrome 96, Firefox 94, Safari 15"
+
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+      placeholder: "e.g. 3.9.7"
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js version
+      placeholder: "e.g. 16.14.0"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs and error messages
+      description: Paste any relevant logs or error messages
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Any other information that might help
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I checked that this bug has not already been reported
+          required: true
+        - label: I tested with the latest code
+          required: true
+        - label: I included all necessary reproduction information
+          required: true

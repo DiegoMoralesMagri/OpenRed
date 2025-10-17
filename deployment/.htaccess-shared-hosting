@@ -1,0 +1,58 @@
+# OpenRed - Configuration Apache pour hébergement mutualisé O2Switch
+# Version compatible et sécurisée
+
+# Redirection vers l'interface principale
+DirectoryIndex index.html index.php
+
+# Configuration MIME types
+AddType application/json .json
+AddType text/html .html
+
+# Headers de sécurité (optionnels - désactivés si problème)
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options SAMEORIGIN
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Compression (si supportée)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache pour optimiser les performances
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType image/png "access plus 7 days"
+    ExpiresByType image/jpg "access plus 7 days"
+    ExpiresByType image/jpeg "access plus 7 days"
+</IfModule>
+
+# Protection des fichiers de configuration
+<Files "*.json">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "*.md">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Permettre l'accès aux fichiers essentiels
+<Files "index.html">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "*.css">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "*.js">
+    Order Allow,Deny
+    Allow from all
+</Files>

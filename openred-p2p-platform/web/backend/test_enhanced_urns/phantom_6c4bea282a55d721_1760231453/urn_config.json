@@ -1,0 +1,13 @@
+{
+  "phantom_id": "phantom_6c4bea282a55d721_1760231453",
+  "phantom_name": "Test Phoenix Schr\u00f6dinger",
+  "image_dimensions": [
+    100,
+    100
+  ],
+  "total_fragments": 10000,
+  "creation_timestamp": 1760231458.4857163,
+  "authorized_node": "Diego",
+  "schrodinger_enabled": true,
+  "nck_system": true
+}
