@@ -1,0 +1,60 @@
+# OpenRed - Configuration .htaccess O2Switch compatible
+# Version testée pour hébergeurs mutualisés français
+
+# Redirection vers page d'accueil
+DirectoryIndex index.html index.php
+
+# Types MIME essentiels
+AddType text/html .html
+AddType text/css .css
+AddType application/javascript .js
+AddType application/json .json
+AddType image/png .png
+AddType image/jpeg .jpg .jpeg
+
+# Protection des fichiers de configuration
+<Files "*.json">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<Files "*.py">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<Files "*.md">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Autorisation des fichiers web
+<Files "*.html">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "*.css">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "*.js">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "*.png">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "*.jpg">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "*.jpeg">
+    Order Allow,Deny
+    Allow from all
+</Files>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenRed P2P Platform - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .feature-desc {
+            line-height: 1.6;
+            color: #666;
+        }
+        
+        .demo-nav {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            margin: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .demo-button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .status-bar {
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            font-size: 0.9em;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-bar">
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number" id="nodeStatus">🔄</div>
+                <div class="stat-label">Node Status</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="nodesDiscovered">0</div>
+                <div class="stat-label">Nodes Discovered</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="friendsCount">0</div>
+                <div class="stat-label">Friends</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="spiderStatus">🕷️</div>
+                <div class="stat-label">Spider Active</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hero" style="margin-top: 60px;">
+        <h1>🌐 OpenRed P2P Platform</h1>
+        <p>
+            Découvrez le premier réseau social P2P vraiment décentralisé ! 
+            Aucun serveur central, découverte automatique mondiale, 
+            profils visuels et partage sécurisé.
+        </p>
+    </div>
+    
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon">👤</div>
+            <div class="feature-title">Profils Sociaux</div>
+            <div class="feature-desc">
+                Créez votre profil avec photo, bio, profession et intérêts. 
+                Miniatures ultra-légères pour la découverte P2P en temps réel.
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <div class="feature-title">Découverte Mondiale</div>
+            <div class="feature-desc">
+                Notre révolutionnaire "Internet Spider Protocol" découvre 
+                automatiquement d'autres nœuds OpenRed partout dans le monde !
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">🤝</div>
+            <div class="feature-title">Système d'Amitié</div>
+            <div class="feature-desc">
+                Demandes d'amitié sécurisées, groupes d'amis personnalisés 
+                (famille, professionnel, etc.) avec permissions granulaires.
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <div class="feature-title">Messagerie P2P</div>
+            <div class="feature-desc">
+                Messages directs chiffrés entre amis, conversations de groupe,
+                et système de messagerie hors-ligne persistant.
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">🔱</div>
+            <div class="feature-title">Phantom URN</div>
+            <div class="feature-desc">
+                Système révolutionnaire de partage de ressources avec 
+                "Schrödinger Phoenix" - les fichiers existent partout et nulle part !
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">🔐</div>
+            <div class="feature-title">Sécurité Totale</div>
+            <div class="feature-desc">
+                Chiffrement RSA 2048, protocole 3-phases, signatures cryptographiques.
+                Aucun serveur central = aucun point de défaillance !
+            </div>
+        </div>
+    </div>
+    
+    <div class="demo-nav">
+        <h2 style="margin-bottom: 20px; color: #667eea;">🎯 Testez la Démo !</h2>
+        <a href="/profile" class="demo-button">👤 Mon Profil</a>
+        <a href="/friends" class="demo-button">🤝 Amis & Découverte</a>
+        <a href="/messages" class="demo-button">💬 Messages</a>
+        <a href="/urn" class="demo-button">🔱 Phantom URN</a>
+        <a href="/api/docs" class="demo-button">📋 API Docs</a>
+    </div>
+    
+    <script>
+        // Update status in real-time
+        async function updateStatus() {
+            try {
+                // Node status
+                const statusResponse = await fetch('/api/status');
+                const status = await statusResponse.json();
+                
+                document.getElementById('nodeStatus').textContent = 
+                    status.p2p_active ? '🟢' : '🔴';
+                
+                document.getElementById('nodesDiscovered').textContent = 
+                    status.total_discovered || 0;
+                
+                document.getElementById('friendsCount').textContent = 
+                    status.total_friends || 0;
+                
+                // Spider status
+                const spiderResponse = await fetch('/api/spider/status');
+                const spider = await spiderResponse.json();
+                
+                document.getElementById('spiderStatus').textContent = 
+                    spider.status === 'running' ? '🕷️🟢' : '🕷️🔴';
+                    
+            } catch (error) {
+                console.log('Status update failed:', error);
+            }
+        }
+        
+        // Update every 5 seconds
+        updateStatus();
+        setInterval(updateStatus, 5000);
+        
+        // Welcome message
+        setTimeout(() => {
+            console.log('🌟 Welcome to OpenRed P2P Platform!');
+            console.log('🚀 Check the network tab to see P2P magic happening!');
+        }, 1000);
+    </script>
+</body>
+</html>

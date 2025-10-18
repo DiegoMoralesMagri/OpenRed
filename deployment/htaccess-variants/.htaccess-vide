@@ -1,0 +1,5 @@
+# OpenRed - AUCUNE restriction (test de fonctionnement)
+# Version vide pour tester si le problème vient du .htaccess
+
+# Juste la page d'accueil
+DirectoryIndex index.html

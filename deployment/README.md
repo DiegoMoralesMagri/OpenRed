@@ -1,78 +1,46 @@
-# 🚀 OpenRed Deployment System
+# 🌟 OpenRed Deployment System
 
-Ce dossier contient tous les fichiers nécessaires pour le déploiement d'OpenRed sur différents types d'hébergement.
+**Système de déploiement universel et organisé pour OpenRed**
 
-## 📁 Structure
+## 📁 Structure Propre
 
-### 🎯 Scripts d'Installation
-- `install-openred.sh` - Installation Linux/macOS (VPS, serveurs dédiés)
-- `install-openred.ps1` - Installation Windows (serveurs Windows)  
-- `install-openred-shared.sh` - Installation hébergement mutualisé Linux
-- `install-openred-shared.ps1` - Installation hébergement mutualisé Windows
+```
+deployment/
+├── 📦 packages/         # Packages finaux prêts à déployer
+├── 🚀 scripts/          # Scripts d'installation un-clic
+├── 📖 documentation/    # Guides et documentation
+├── ⚙️ htaccess-variants/ # Variantes .htaccess compatibilité
+├── 🔧 testing/          # Scripts de test et debug
+└── 🗃️ archive/          # Fichiers de développement archivés
+```
 
-### 📦 Packages de Déploiement
-- `openred-complete.zip` - Package complet (951 KB) pour VPS/serveurs
-- `openred-shared-hosting.zip` - Package optimisé (127 KB) pour hébergement mutualisé
+## 🎯 Démarrage Rapide
 
-### 🛠️ Outils de Création
-- `create_complete_package.py` - Générateur du package complet
-- `create_shared_hosting_package.py` - Générateur du package hébergement mutualisé
-- `install_o2switch.py` - Installateur spécialisé O2Switch
-
-### 📖 Documentation
-- `INSTALLATION_GUIDE.md` - Guide complet d'installation
-- `ONE_LINER_SYSTEM.md` - Documentation du système one-liner
-- `install-page.html` - Page d'installation web interactive
-
-## 🚀 Utilisation Rapide
-
-### Installation VPS/Serveur Dédié
+### Installation un-clic (RECOMMANDÉE)
 ```bash
-curl -sSL https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/install-openred.sh | bash
+curl -sSL https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/scripts/install-authentic-fixed.sh | bash
 ```
 
-### Installation Hébergement Mutualisé
+### Packages Disponibles
+- **openred-authentic-platform.zip** (173.9 KB) - ✅ Système complet recommandé
+- **openred-cpanel-python.zip** (164.8 KB) - Pour gestionnaire cPanel Python
+- **openred-shared-hosting.zip** (6.7 KB) - Version légère hébergement mutualisé
+
+## 📚 Documentation
+
+- **Guide d'installation complet** → `documentation/INSTALLATION_GUIDE.md`
+- **Système one-liner** → `documentation/ONE_LINER_SYSTEM.md`
+- **Structure détaillée** → `documentation/STRUCTURE.md`
+
+## 🆘 Support
+
+En cas de problème :
 ```bash
-curl -sSL https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/install-openred-shared.sh | bash
+curl -sSL https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/testing/repair_openred.sh | bash
 ```
 
-### Installation Windows
-```powershell
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DiegoMoralesMagri/OpenRed/main/deployment/install-openred.ps1'))
-```
+---
 
-## 🎯 Types d'Hébergement Supportés
+**Fini le désordre ! Tout est maintenant parfaitement organisé ! 🎉**
 
-### ✅ Hébergement Mutualisé
-- O2Switch
-- OVH
-- 1&1 IONOS
-- HostGator
-- GoDaddy
-- Et tous les autres avec PHP/Python
-
-### ✅ VPS & Serveurs Dédiés
-- Ubuntu/Debian
-- CentOS/RHEL
-- Windows Server
-- Docker
-
-### ✅ Cloud Platforms
-- AWS
-- Google Cloud
-- Microsoft Azure
-- DigitalOcean
-
-## 🛡️ Sécurité
-
-Tous les packages sont vérifiés avec des checksums et les installations utilisent HTTPS uniquement.
-
-## 📊 Métriques
-
-- **Package complet** : 951 KB - 100+ fichiers
-- **Package mutualisé** : 127 KB - 15 fichiers essentiels
-- **Installation** : ~30 secondes
-- **Compatibilité** : 95% des hébergeurs
-
-- `INSTALLATION_GUIDE.md` - Guide détaillé
-- `ONE_LINER_SYSTEM.md` - Documentation du système one-liner
+*Voir README-ORGANISED.md pour les détails complets*

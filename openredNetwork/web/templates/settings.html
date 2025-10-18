@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h2><i class="fas fa-cog"></i> Paramètres</h2>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Profil Actuel</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Profil de Communication</label>
+                    <select class="form-select" id="profileSelect">
+                        <option value="Familie">Familie</option>
+                        <option value="Amis">Amis</option>
+                        <option value="Professionnel">Professionnel</option>
+                        <option value="Public">Public</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Préférences IA</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Niveau de Créativité</label>
+                    <input type="range" class="form-range" id="creativityRange" 
+                           min="0" max="1" step="0.1" value="0.7">
+                    <div class="form-text">0 = Factuel, 1 = Très créatif</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Longueur des Réponses</label>
+                    <select class="form-select" id="lengthSelect">
+                        <option value="short">Courtes</option>
+                        <option value="medium" selected>Moyennes</option>
+                        <option value="long">Détaillées</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <button class="btn btn-success" onclick="saveSettings()">
+                <i class="fas fa-save"></i> Sauvegarder
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}

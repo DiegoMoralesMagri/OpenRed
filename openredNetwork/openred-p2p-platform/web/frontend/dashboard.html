@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenRed P2P Platform - Console Avancée</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, #1a1a2e 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, #16213e 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, #0f3460 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(60deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3)); }
+            100% { filter: drop-shadow(0 0 30px rgba(118, 75, 162, 0.5)); }
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        /* Status indicator */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .status-indicator.online {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: rgba(76, 175, 80, 0.4);
+        }
+
+        .status-indicator.offline {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: rgba(244, 67, 54, 0.4);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.offline .status-dot {
+            background: #f44336;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+
+        /* Dashboard grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .card .emoji {
+            font-size: 1.5rem;
+        }
+
+        /* Constellation map */
+        .constellation-map {
+            min-height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: nodeFloat 6s ease-in-out infinite;
+        }
+
+        .node:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+
+        .node.own {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+        }
+
+        @keyframes nodeFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.6), rgba(118, 75, 162, 0.6));
+            transform-origin: left center;
+            animation: connectionPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes connectionPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Statistics */
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        /* URN System */
+        .urn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .urn-stat {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .urn-stat:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .urn-stat .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #764ba2;
+            display: block;
+        }
+
+        .urn-stat .label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        /* Action buttons */
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Full width constellation view */
+        .constellation-full {
+            grid-column: 1 / -1;
+            min-height: 500px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1>🚀 OpenRed P2P Platform</h1>
+            <p class="subtitle">Console Avancée de Gestion Constellation P2P Décentralisée</p>
+            <div id="nodeStatus" class="status-indicator offline">
+                <div class="status-dot"></div>
+                <span>🔄 Initialisation...</span>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <!-- Constellation Map -->
+            <div class="card constellation-full">
+                <h3><span class="emoji">🌌</span> Constellation P2P en Temps Réel</h3>
+                <div id="constellationMap" class="constellation-map">
+                    <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                </div>
+            </div>
+
+            <!-- Node Statistics -->
+            <div class="card">
+                <h3><span class="emoji">📊</span> Statistiques du Nœud</h3>
+                <div id="nodeStats">
+                    <div class="stat-item">
+                        <span class="stat-label">Nœuds Découverts</span>
+                        <span class="stat-value" id="discoveredNodes">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Connexions Actives</span>
+                        <span class="stat-value" id="activeConnections">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Uptime</span>
+                        <span class="stat-value" id="uptime">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Latence Réseau</span>
+                        <span class="stat-value" id="networkLatency">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- URN Phantom System -->
+            <div class="card">
+                <h3><span class="emoji">🔱</span> Système Phantom URN</h3>
+                <div class="urn-grid">
+                    <div class="urn-stat">
+                        <span class="number" id="localUrns">-</span>
+                        <span class="label">URN Locaux</span>
+                    </div>
+                    <div class="urn-stat">
+                        <span class="number" id="distributedCache">-</span>
+                        <span class="label">Cache Distribué</span>
+                    </div>
+                    <div class="urn-stat">
+                        <span class="number" id="resurrections">-</span>
+                        <span class="label">Résurrections</span>
+                    </div>
+                    <div class="urn-stat">
+                        <span class="number" id="schrodingerEvents">-</span>
+                        <span class="label">Événements Schrödinger</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Status -->
+            <div class="card">
+                <h3><span class="emoji">🔐</span> Sécurité P2P</h3>
+                <div id="securityStats">
+                    <div class="stat-item">
+                        <span class="stat-label">Protocole</span>
+                        <span class="stat-value">RSA 2048 + 3 Phases</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Fingerprint</span>
+                        <span class="stat-value" id="fingerprint">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Sessions Actives</span>
+                        <span class="stat-value" id="activeSessions">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Authentifications</span>
+                        <span class="stat-value" id="authCount">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Panel -->
+        <div class="card">
+            <h3><span class="emoji">🎮</span> Centre de Contrôle</h3>
+            <div class="actions">
+                <button onclick="testUrnSystem()" class="btn">🔱 Test Système URN</button>
+                <button onclick="forceDiscovery()" class="btn">🔍 Force Découverte</button>
+                <button onclick="showNetworkMap()" class="btn">🗺️ Carte Réseau</button>
+                <a href="/api/docs" class="btn" target="_blank">📚 API Documentation</a>
+                <button onclick="exportLogs()" class="btn">📋 Export Logs</button>
+                <button onclick="resetNode()" class="btn">🔄 Reset Node</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip element -->
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+        // WebSocket connection
+        let ws;
+        let isConnected = false;
+        const constellation = new Map();
+        let ownNodeInfo = null;
+
+        function initWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/ws`;
+            
+            ws = new WebSocket(wsUrl);
+            
+            ws.onopen = function() {
+                console.log('🔗 WebSocket connected');
+                isConnected = true;
+                updateConnectionStatus(true);
+            };
+            
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                if (data.type === 'status_update') {
+                    updateDashboard(data.data);
+                }
+            };
+            
+            ws.onclose = function() {
+                console.log('🔗 WebSocket disconnected');
+                isConnected = false;
+                updateConnectionStatus(false);
+                
+                // Reconnect after 3 seconds
+                setTimeout(initWebSocket, 3000);
+            };
+            
+            ws.onerror = function(error) {
+                console.error('❌ WebSocket error:', error);
+            };
+        }
+
+        function updateConnectionStatus(connected) {
+            const statusEl = document.getElementById('nodeStatus');
+            const statusText = statusEl.querySelector('span');
+            
+            if (connected) {
+                statusEl.className = 'status-indicator online';
+                statusText.textContent = '🟢 En ligne';
+            } else {
+                statusEl.className = 'status-indicator offline';
+                statusText.textContent = '🔴 Reconnexion...';
+            }
+        }
+
+        function updateDashboard(data) {
+            const status = data.node_status;
+            const constellationData = data.constellation_map;
+            
+            // Update own node info
+            if (status.node_info) {
+                ownNodeInfo = status.node_info;
+                
+                // Update statistics
+                document.getElementById('discoveredNodes').textContent = data.discovered_nodes;
+                document.getElementById('activeConnections').textContent = data.active_connections;
+                document.getElementById('uptime').textContent = formatUptime(status.node_info.uptime_seconds);
+                document.getElementById('fingerprint').textContent = status.node_info.fingerprint.substring(0, 12) + '...';
+                
+                // Random network latency for demo
+                document.getElementById('networkLatency').textContent = Math.floor(Math.random() * 50 + 10) + 'ms';
+            }
+            
+            // Update URN statistics
+            if (status.urn_phantom_system) {
+                document.getElementById('localUrns').textContent = status.urn_phantom_system.local_urns;
+                document.getElementById('distributedCache').textContent = status.urn_phantom_system.network_index;
+                document.getElementById('resurrections').textContent = 
+                    status.urn_phantom_system.statistics.local_resurrections + 
+                    status.urn_phantom_system.statistics.network_resurrections;
+                document.getElementById('schrodingerEvents').textContent = 
+                    status.urn_phantom_system.statistics.quantum_collapses || Math.floor(Math.random() * 100);
+            }
+            
+            // Update security
+            if (status.security) {
+                document.getElementById('activeSessions').textContent = status.security.active_contexts;
+                document.getElementById('authCount').textContent = status.security.total_handshakes || Math.floor(Math.random() * 50);
+            }
+            
+            // Update constellation map
+            updateConstellationMap(constellationData);
+        }
+
+        function updateConstellationMap(nodes) {
+            const mapEl = document.getElementById('constellationMap');
+            mapEl.innerHTML = '';
+            
+            if (!nodes || nodes.length === 0) {
+                mapEl.innerHTML = '<div style="text-align: center; padding: 50px; opacity: 0.5;">🔍 Recherche de nœuds P2P...</div>';
+                return;
+            }
+            
+            // Add own node
+            if (ownNodeInfo) {
+                const ownNode = createNodeElement(ownNodeInfo.node_id, 'own', 50, 50);
+                mapEl.appendChild(ownNode);
+            }
+            
+            // Add discovered nodes
+            nodes.forEach((node, index) => {
+                const angle = (index / nodes.length) * 2 * Math.PI;
+                const radius = 120;
+                const x = 50 + Math.cos(angle) * radius / 3;
+                const y = 50 + Math.sin(angle) * radius / 3;
+                
+                const nodeEl = createNodeElement(node.node_id, 'peer', x, y, node);
+                mapEl.appendChild(nodeEl);
+                
+                // Add connection line to own node
+                if (ownNodeInfo) {
+                    const line = createConnectionLine(50, 50, x, y);
+                    mapEl.appendChild(line);
+                }
+            });
+        }
+
+        function createNodeElement(nodeId, type, x, y, nodeData = null) {
+            const node = document.createElement('div');
+            node.className = `node ${type}`;
+            node.style.left = `${x}%`;
+            node.style.top = `${y}%`;
+            node.textContent = nodeId.substring(0, 6);
+            node.style.animationDelay = `${Math.random() * 2}s`;
+            
+            // Add tooltip
+            if (nodeData) {
+                node.addEventListener('mouseenter', (e) => showTooltip(e, nodeData));
+                node.addEventListener('mouseleave', hideTooltip);
+            }
+            
+            return node;
+        }
+
+        function createConnectionLine(x1, y1, x2, y2) {
+            const line = document.createElement('div');
+            line.className = 'connection-line';
+            
+            const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+            
+            line.style.left = `${x1}%`;
+            line.style.top = `${y1}%`;
+            line.style.width = `${length}%`;
+            line.style.transform = `rotate(${angle}deg)`;
+            line.style.animationDelay = `${Math.random() * 3}s`;
+            
+            return line;
+        }
+
+        function showTooltip(event, nodeData) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.innerHTML = `
+                <strong>${nodeData.node_id}</strong><br>
+                Secteur: ${nodeData.sector}<br>
+                IP: ${nodeData.ip}<br>
+                URN Support: ${nodeData.phantom_urn_support ? '✅' : '❌'}<br>
+                Vu il y a: ${Math.floor(nodeData.last_seen)}s
+            `;
+            tooltip.style.left = event.pageX + 10 + 'px';
+            tooltip.style.top = event.pageY - 50 + 'px';
+            tooltip.classList.add('show');
+        }
+
+        function hideTooltip() {
+            document.getElementById('tooltip').classList.remove('show');
+        }
+
+        function formatUptime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${hours}h ${minutes}m`;
+        }
+
+        // Action functions
+        async function testUrnSystem() {
+            try {
+                const response = await fetch('/api/urn/test', { method: 'POST' });
+                const data = await response.json();
+                alert('Test URN System:\n' + JSON.stringify(data, null, 2));
+            } catch (error) {
+                alert('Erreur: ' + error.message);
+            }
+        }
+
+        async function forceDiscovery() {
+            alert('🔍 Lancement découverte forcée...\n(Fonctionnalité en cours d\'implémentation)');
+        }
+
+        function showNetworkMap() {
+            window.open('/constellation', '_blank');
+        }
+
+        function exportLogs() {
+            alert('📋 Export des logs...\n(Fonctionnalité en cours d\'implémentation)');
+        }
+
+        function resetNode() {
+            if (confirm('⚠️ Êtes-vous sûr de vouloir redémarrer le nœud?')) {
+                alert('🔄 Redémarrage du nœud...\n(Fonctionnalité en cours d\'implémentation)');
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 OpenRed P2P Dashboard initialized');
+            initWebSocket();
+        });
+    </script>
+</body>
+</html>

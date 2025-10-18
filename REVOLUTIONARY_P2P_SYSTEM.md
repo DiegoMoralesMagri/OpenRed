@@ -1,4 +1,4 @@
-# 🚀 O-RedSearch: Système P2P Révolutionnaire / Revolutionary P2P System
+# 🚀 O-RedSearch: Écosystème P2P Révolutionnaire 2025 / Revolutionary P2P Ecosystem 2025
 
 *[English](#english) | [Español](#español) | [中文](#中文)*
 
@@ -6,58 +6,108 @@
 
 ## 🇫🇷 Français
 
-### 🌟 Révolution : Abandon de l'API Centrale 
+### 🌟 Révolution 2025 : Écosystème Souverain Complet
 
-**OpenRed a abandonné définitivement son API centrale** pour une approche révolutionnaire : **O-RedSearch Pure P2P**.
+**OpenRed a créé le premier écosystème numérique 100% souverain** avec **Forts Multi-Profils**, **Protection Anti-Sybille** et **Architecture P2P Pure**.
 
-### 🎯 Pourquoi cette Révolution ?
+### 🎯 Pourquoi cette Révolution Totale ?
 
-- **🕵️ Anti-surveillance** : Aucun point central, aucune trace
-- **🌐 Vraie décentralisation** : Les nœuds se découvrent comme des "phares dans la nuit"
-- **🔐 Sécurité mathématique** : Architecture cryptographique révolutionnaire
-- **⚡ Performance** : Communication directe sans intermédiaires
+- **🏰 Souveraineté absolue** : Vos données = Votre territoire inviolable
+- **👤 Identités contextuelles** : Profils isolés cryptographiquement (Famille/Amis/Pro/Public)
+- **�️ Sécurité militaire** : Protection anti-Sybille et validation P2P distribuée
+- **🌐 Accès mondial** : Protocole orp:// natif avec accès depuis partout
+- **🔐 Chiffrement multicouches** : Fort → Profils → Données avec clés uniques
 
-### 🏗️ Architecture Révolutionnaire
+### 🏗️ Architecture Écosystème 2025
 
-#### 1. Découverte "Phare dans la Nuit"
+#### 1. Fort Numérique Souverain
 ```
-📡 UDP Multicast (224.0.1.100:5354)
-├── Beacons cryptographiques
-├── Fingerprints uniques RSA 2048
-└── Chiffrement réseau PBKDF2
+🏰 FORT DIGITAL PERSONNEL
+├── 👤 Multi-Profils Contextuels
+│   ├── 👨‍👩‍👧‍👦 Famille (chiffrement spécialisé)
+│   ├── 👥 Amis (isolation créative)
+│   ├── � Professionnel (données métier)
+│   └── 🌍 Public (projections contrôlées)
+├── 🛡️ Protection Anti-Sybille
+│   ├── Proof of Work (création fort)
+│   ├── Liaison cryptographique (profils)
+│   ├── Réputation P2P (comportement)
+│   └── Détection temps réel (surveillance)
+└── 🌐 Accès Mondial
+    ├── Protocole orp:// natif
+    ├── Extension navigateur
+    ├── Configuration automatique
+    └── P2P discovery global
 ```
 
-#### 2. Protocole de Sécurité en 3 Phases
+#### 2. Protocole de Sécurité Multicouches
 ```
-Phase 1: REQUEST  → Demande avec signature RSA
-Phase 2: VERIFY   → Vérification et réponse signée  
-Phase 3: FINALIZE → Lien mutuel mathématique
+Couche 1: FORT     → Identité persistante + PoW validation
+Couche 2: PROFILS  → Signature RSA 2048 liaison fort-profil  
+Couche 3: DONNÉES  → Chiffrement Fernet par contexte
+Couche 4: RÉSEAU   → P2P discovery + réputation distribuée
 ```
 
-#### 3. Connexions P2P Sécurisées
-- **Aucun token** : Échange direct de clés publiques
-- **Signatures RSA** : Vérification cryptographique pure
-- **Liens mathématiques** : Horodatage + calculs vérifiables
+#### 3. Connexions P2P Révolutionnaires
+- **Découverte automatique** : DHT P2P + multicast local + seeds communautaires
+- **Validation communautaire** : Réputation distribuée sans serveur central
+- **Isolation contextuelle** : Profils connectés selon contexte approprié
+- **Accès mondial** : orp://fort_id.openred/ accessible partout
 
-### 🔧 Utilisation
+### 🔧 Utilisation Écosystème 2025
 
 ```bash
-# Nœud Technologie
-python o_red_search_secure_p2p.py --node-id "tech_node" --sector "tech" --port 9001 --auto-connect
+# Création fort souverain
+python creer_fort.py
 
-# Nœud Santé  
-python o_red_search_secure_p2p.py --node-id "health_node" --sector "health" --port 9002 --auto-connect
+# Lancement interface multi-profils
+python serveur_multi_profils.py
+
+# Accès mondial avec protocole orp://
+python acces_mondial.py
+
+# Protection anti-Sybille
+python modules/securite/protection_anti_sybille.py
 ```
 
-### 📊 Avantages vs API Centrale
+### 📊 Avantages vs Systèmes Traditionnels
 
-| Aspect | API Centrale ❌ | O-RedSearch P2P ✅ |
+| Aspect | Systèmes Centralisés ❌ | Écosystème OpenRed 2025 ✅ |
 |--------|----------------|-------------------|
-| **Points de défaillance** | Serveur unique | Aucun |
-| **Surveillance** | Traceable | Invisible |
-| **Latence** | 2+ sauts réseau | Direct |
-| **Évolutivité** | Limitée | Infinie |
-| **Résistance** | Fragile | Antifragile |
+| **Souveraineté données** | Contrôlées par géants tech | 100% utilisateur |
+| **Identités multiples** | Profil unique exposé | Contextes isolés chiffrés |
+| **Sécurité** | Points de défaillance | Architecture multicouches |
+| **Surveillance** | Tracking généralisé | Impossible par design |
+| **Évolutivité** | Limitée par serveurs | Croissance P2P infinie |
+| **Résilience** | Fragile (serveurs) | Antifragile (P2P) |
+| **Coût** | Abonnements permanents | Infrastructure personnelle |
+| **Contrôle** | Géants tech | Utilisateur souverain |
+
+### 🌟 Innovations Révolutionnaires 2025
+
+#### 🏰 Forts Numériques Souverains
+- **Territoire numérique personnel** inviolable
+- **Identité persistante** cryptographiquement prouvée
+- **Accès mondial** via protocole orp:// natif
+- **Configuration automatique** (IP publique + routeur)
+
+#### 👤 Multi-Profils Contextuels
+- **Isolation cryptographique** complète entre profils
+- **4 contextes** : Famille, Amis, Professionnel, Public
+- **Basculement fluide** sans fuite de données
+- **Permissions granulaires** par contexte
+
+#### 🛡️ Protection Anti-Sybille Militaire
+- **Proof of Work** empêchant création massive identités
+- **Réputation distribuée** P2P sans serveur central
+- **Détection comportements** suspects automatique
+- **Blacklist collaborative** temps réel
+
+#### 🔐 Sécurité Multicouches
+- **Fort** : Identité RSA 2048 persistante
+- **Profils** : Liaison cryptographique inviolable
+- **Données** : Chiffrement Fernet par contexte
+- **Réseau** : Validation P2P distribuée
 
 ---
 

@@ -1,0 +1,79 @@
+# 🇫🇷 Dépendances minimales pour l'API Centrale OpenRed v3.0# === Core Framework ===
+
+# 🇺🇸 Minimal dependencies for OpenRed v3.0 Central API  fastapi==0.104.1
+
+# 🇪🇸 Dependencias mínimas para la API Central OpenRed v3.0uvicorn[standard]==0.24.0
+
+# 🇨🇳 OpenRed v3.0中央API的最小依赖pydantic==2.5.2
+
+pydantic-settings==2.1.0
+
+# 🇫🇷 Framework web ultra-rapide / 🇺🇸 Ultra-fast web framework / 🇪🇸 Framework web ultra-rápido / 🇨🇳 超快速Web框架
+
+fastapi==0.104.1# === Database ===
+
+sqlalchemy==2.0.23
+
+# 🇫🇷 Serveur ASGI haute performance / 🇺🇸 High-performance ASGI server / 🇪🇸 Servidor ASGI de alto rendimiento / 🇨🇳 高性能ASGI服务器alembic==1.13.0
+
+uvicorn[standard]==0.24.0psycopg2-binary==2.9.9
+
+
+
+# 🇫🇷 Cryptographie avancée / 🇺🇸 Advanced cryptography / 🇪🇸 Criptografía avanzada / 🇨🇳 高级密码学# === Cache & Queue ===
+
+cryptography==41.0.7redis==5.0.1
+
+aioredis==2.0.1
+
+# 🇫🇷 Sérialisation JSON rapide / 🇺🇸 Fast JSON serialization / 🇪🇸 Serialización JSON rápida / 🇨🇳 快速JSON序列化
+
+orjson==3.9.10# === Security & Crypto ===
+
+cryptography==41.0.8
+
+# 🇫🇷 Validation de données / 🇺🇸 Data validation / 🇪🇸 Validación de datos / 🇨🇳 数据验证passlib[argon2]==1.7.4
+
+pydantic==2.5.0python-jose[cryptography]==3.3.0
+
+python-multipart==0.0.6
+
+# 🇫🇷 Gestion de cache en mémoire / 🇺🇸 In-memory cache management / 🇪🇸 Gestión de caché en memoria / 🇨🇳 内存缓存管理PyJWT==2.8.0
+
+cachetools==5.3.2
+
+# === HTTP Client ===
+
+# 🇫🇷 Limitation de débit / 🇺🇸 Rate limiting / 🇪🇸 Limitación de velocidad / 🇨🇳 速率限制httpx==0.25.2
+
+slowapi==0.1.9aiohttp==3.9.1
+
+
+
+# 🇫🇷 Support CORS / 🇺🇸 CORS support / 🇪🇸 Soporte CORS / 🇨🇳 CORS支持# === Monitoring & Metrics ===
+
+# (Inclus dans FastAPI / Included in FastAPI / Incluido en FastAPI / 包含在FastAPI中)prometheus-client==0.19.0
+
+structlog==23.2.0
+
+# 🇫🇷 Tests (optionnel) / 🇺🇸 Testing (optional) / 🇪🇸 Pruebas (opcional) / 🇨🇳 测试（可选）
+
+pytest==7.4.3# === Rate Limiting ===
+
+pytest-asyncio==0.21.1slowapi==0.1.9
+
+httpx==0.25.2
+# === Validation ===
+validators==0.22.0
+
+# === Development ===
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-mock==3.12.0
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+mypy==1.7.1
+
+# === Production ===
+gunicorn==21.2.0

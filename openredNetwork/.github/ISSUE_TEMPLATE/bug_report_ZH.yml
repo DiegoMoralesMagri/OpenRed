@@ -1,0 +1,140 @@
+name: Bug 报告
+description: 在 O-Red 中报告 bug
+title: "[BUG] "
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您花时间报告该问题！这将帮助我们改进 O-Red。
+
+        提交之前，请检查该问题是否已在[现有 issues](../issues)中报告。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug 描述
+      description: 对问题的清晰简要描述
+      placeholder: "描述无法正常工作的内容..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 重现步骤
+      description: 如何重现该问题
+      placeholder: |
+        1. 转到 '...'
+        2. 点击 '...'
+        3. 滚动到 '...'
+        4. 看到错误
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为
+      description: 应该发生的情况
+      placeholder: "我期望..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+      description: 实际发生的情况
+      placeholder: "相反，我看到了..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: 受影响组件
+      description: 哪个 O-Red 组件受影响？
+      options:
+        - 中央 API (FastAPI)
+        - Web 界面 (React)
+        - 节点 P2P 客户端
+        - O-RedMind (AI)
+        - O-RedStore (Marketplace)
+        - O-RedOffice (办公套件)
+        - O-RedSearch (搜索引擎)
+        - 文档
+        - 部署脚本
+        - 其他（在描述中说明）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: 严重性
+      description: 该 bug 对使用影响有多大？
+      options:
+        - 严重（阻止使用）
+        - 高（重要功能损坏）
+        - 中（轻微不便）
+        - 低（界面问题）
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: 操作系统
+      placeholder: "例如 Windows 11、Ubuntu 20.04、macOS 12.0"
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: 浏览器（如适用）
+      placeholder: "例如 Chrome 96、Firefox 94、Safari 15"
+
+  - type: input
+    id: python-version
+    attributes:
+      label: Python 版本
+      placeholder: "例如 3.9.7"
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js 版本
+      placeholder: "例如 16.14.0"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志和错误信息
+      description: 粘贴相关日志或错误信息
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 截图
+      description: 如适用，请添加截图
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 额外上下文
+      description: 任何其他有助于排查的信息
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 检查清单
+      options:
+        - label: 我已确认此 bug 未被报告
+          required: true
+        - label: 我已使用最新代码进行测试
+          required: true
+        - label: 我已提供重现该问题所需的所有信息
+          required: true

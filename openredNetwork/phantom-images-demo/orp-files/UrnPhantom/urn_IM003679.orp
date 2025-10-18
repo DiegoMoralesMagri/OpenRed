@@ -1,0 +1,46 @@
+{
+  "format_version": "1.0.0",
+  "phantom_id": "urn_IM003679",
+  "urn_id": "urn_IM003679",
+  "phantom_name": "UrnPhantom urn_IM003679",
+  "mime_type": "image/jpg",
+  "dimensions": {
+    "width": 592,
+    "height": 400
+  },
+  "created_at": "1758882929.6603944",
+  "file_id": "urn_IM003679",
+  "description": "OpenRed Phantom: UrnPhantom urn_IM003679",
+  "urn_config": {
+    "image_hash": "6ae611ae34e665817e402a33248d2b7b7234ea3aff707287197c78e271aad2f5",
+    "total_fragments": 236800,
+    "image_dimensions": [
+      592,
+      400
+    ],
+    "creation_time": 1758882929.6603944,
+    "authorized_node": "urn_node_demo",
+    "burn_after_reads": 1
+  },
+  "urn_dir": "urns\\urn_IM003679",
+  "access_data": {
+    "server_url": "http://localhost:9300",
+    "phantom_endpoint": "/phantom/urn_IM003679",
+    "websocket_url": "ws://localhost:9300/ws",
+    "fallback_urls": [],
+    "access_method": "http_primary"
+  },
+  "security_data": {
+    "access_token": null,
+    "permissions": {
+      "view": true,
+      "download": false,
+      "share": true,
+      "expires_at": null
+    },
+    "checksum": "urn_IM003679",
+    "requires_server": true,
+    "anti_capture": true,
+    "urn_type": "JSON_URN"
+  }
+}

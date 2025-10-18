@@ -1,0 +1,132 @@
+name: Feature Request
+description: Propose a new feature for O-Red
+title: "[FEATURE] "
+labels: ["enhancement", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for proposing a new feature for O-Red!
+
+        Your ideas help the project evolve in the right direction.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature summary
+      description: A clear and concise description of the requested feature
+      placeholder: "I would like O-Red to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Which problem would this feature solve?
+      placeholder: "I'm having trouble... / It would be useful to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Detailed description of the feature you'd like to see
+      placeholder: "I propose adding..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected component
+      description: Which O-Red component should include this feature?
+      options:
+        - Central API (FastAPI)
+        - Web Interface (React)
+        - Node P2P Client
+        - O-RedMind (AI)
+        - O-RedStore (Marketplace)
+        - O-RedOffice (Office Suite)
+        - O-RedSearch (Search Engine)
+        - O-RedID (Identity)
+        - Documentation
+        - Infrastructure
+        - New component
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Suggested priority
+      description: How important is this feature?
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Estimated complexity
+      description: What implementation complexity do you expect?
+      options:
+        - Simple
+        - Moderate
+        - Complex
+        - Very complex
+        - I don't know
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you've considered
+      placeholder: "I also thought about..."
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation ideas
+      description: If you have implementation ideas, share them
+      placeholder: "This could be implemented by..."
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups or examples
+      description: Add screenshots, mockups or links if applicable
+
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: Will you contribute?
+      description: Are you interested in working on the feature?
+      options:
+        - Yes, I can implement this
+        - Yes, I can help with guidance
+        - I can test and provide feedback
+        - No, but I support the idea
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Any other information that might help
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I checked a similar feature hasn't been proposed
+          required: true
+        - label: This feature aligns with O-Red philosophy
+          required: true
+        - label: I provided sufficient details
+          required: true

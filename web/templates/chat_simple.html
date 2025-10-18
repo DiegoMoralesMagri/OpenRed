@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O-RedMind Chat Simple</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <style>
+        body { background-color: #f8f9fa; }
+        .chat-container { max-width: 800px; margin: 20px auto; }
+        .chat-messages { height: 400px; overflow-y: auto; background: white; border: 1px solid #ddd; padding: 15px; }
+        .message { margin-bottom: 10px; padding: 8px 12px; border-radius: 8px; }
+        .message.user { background-color: #007bff; color: white; margin-left: 50px; }
+        .message.ai { background-color: #e9ecef; margin-right: 50px; }
+        .typing { font-style: italic; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4><i class="fas fa-robot"></i> O-RedMind Chat Simple</h4>
+                <small id="connectionStatus">Connexion...</small>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">🤖 Bonjour ! Je suis O-RedMind. Comment puis-je vous aider ?</div>
+            </div>
+            
+            <div class="card-footer">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="messageInput" 
+                           placeholder="Tapez votre message et appuyez sur Entrée...">
+                    <button class="btn btn-outline-secondary" id="uploadBtn">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <button class="btn btn-primary" id="sendBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <input type="file" id="fileInput" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🚀 Script chargé');
+        
+        // Variables globales
+        let socket = null;
+        let isConnected = false;
+        
+        // Elements DOM
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
+        const chatMessages = document.getElementById('chatMessages');
+        const connectionStatus = document.getElementById('connectionStatus');
+        
+        // Test immédiat des éléments
+        console.log('Éléments DOM:', {
+            messageInput: !!messageInput,
+            sendBtn: !!sendBtn,
+            uploadBtn: !!uploadBtn,
+            fileInput: !!fileInput,
+            chatMessages: !!chatMessages
+        });
+        
+        // Fonction d'envoi de message
+        function sendMessage() {
+            console.log('📤 sendMessage() appelée');
+            
+            if (!messageInput) {
+                console.error('❌ messageInput non trouvé');
+                return;
+            }
+            
+            const message = messageInput.value.trim();
+            console.log('Message à envoyer:', message);
+            
+            if (!message) {
+                console.log('Message vide, abandon');
+                return;
+            }
+            
+            // Affichage immédiat du message utilisateur
+            addMessage(message, 'user');
+            messageInput.value = '';
+            
+            // Envoi via Socket.IO si connecté
+            if (socket && isConnected) {
+                console.log('Envoi via Socket.IO');
+                socket.emit('send_message', {
+                    message: message,
+                    modality: 'text',
+                    attachments: []
+                });
+            } else {
+                console.warn('Socket non connecté, simulation réponse');
+                // Simulation d'une réponse pour tester l'interface
+                setTimeout(() => {
+                    addMessage('Je reçois votre message: "' + message + '" mais je ne suis pas encore connecté au serveur.', 'ai');
+                }, 1000);
+            }
+        }
+        
+        // Fonction d'upload
+        function showUpload() {
+            console.log('📎 showUpload() appelée');
+            if (fileInput) {
+                fileInput.click();
+            } else {
+                console.error('❌ fileInput non trouvé');
+            }
+        }
+        
+        // Ajout d'un message à l'interface
+        function addMessage(content, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = (type === 'user' ? '👤 ' : '🤖 ') + content;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Initialisation Socket.IO
+        function initSocket() {
+            console.log('🔌 Initialisation Socket.IO');
+            socket = io();
+            
+            socket.on('connect', function() {
+                isConnected = true;
+                connectionStatus.textContent = '✅ Connecté';
+                connectionStatus.className = 'text-success';
+                console.log('✅ Socket.IO connecté');
+            });
+            
+            socket.on('disconnect', function() {
+                isConnected = false;
+                connectionStatus.textContent = '❌ Déconnecté';
+                connectionStatus.className = 'text-danger';
+                console.log('❌ Socket.IO déconnecté');
+            });
+            
+            socket.on('ai_response', function(data) {
+                console.log('🤖 Réponse IA:', data);
+                addMessage(data.message.content, 'ai');
+            });
+            
+            socket.on('message_received', function(data) {
+                console.log('📨 Message reçu:', data);
+            });
+            
+            socket.on('error', function(error) {
+                console.error('❌ Erreur Socket.IO:', error);
+                connectionStatus.textContent = '❌ Erreur: ' + error.message;
+                connectionStatus.className = 'text-danger';
+            });
+        }
+        
+        // Initialisation au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📋 DOM chargé, initialisation...');
+            
+            // Test des boutons
+            if (sendBtn) {
+                sendBtn.addEventListener('click', sendMessage);
+                console.log('✅ Event listener ajouté au bouton Send');
+            }
+            
+            if (uploadBtn) {
+                uploadBtn.addEventListener('click', showUpload);
+                console.log('✅ Event listener ajouté au bouton Upload');
+            }
+            
+            if (messageInput) {
+                messageInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+                console.log('✅ Event listener ajouté à messageInput');
+            }
+            
+            // Initialisation Socket.IO
+            initSocket();
+            
+            // Test après 2 secondes
+            setTimeout(() => {
+                console.log('🧪 Test automatique après 2s');
+                addMessage('Interface chargée et prête !', 'ai');
+            }, 2000);
+        });
+        
+        // Test de fonction globale
+        window.sendMessage = sendMessage;
+        window.showUpload = showUpload;
+        
+        console.log('📜 Script terminé, fonctions disponibles globalement');
+    </script>
+</body>
+</html>

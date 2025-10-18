@@ -1,0 +1,19 @@
+# OpenRed - Configuration .htaccess ultra-compatible
+# Version minimaliste pour hébergement mutualisé
+
+# Page d'accueil par défaut
+DirectoryIndex index.html
+
+# Configuration MIME basique
+AddType text/html .html
+AddType application/json .json
+
+# Protection minimale des fichiers Python
+<Files "*.py">
+    Deny from all
+</Files>
+
+# Autoriser l'accès aux fichiers essentiels
+<Files "index.html">
+    Allow from all
+</Files>

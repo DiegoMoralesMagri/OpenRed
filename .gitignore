@@ -1,4 +1,32 @@
-# Fichiers Python
+# ===============================================
+# OPENRED - GITIGNORE POUR PROTECTION DES DONNÉES
+# ===============================================
+
+# DONNÉES PERSONNELLES COLLECTÉES PAR O-REDMIND IA
+# CRITIQUE: Ces fichiers contiennent des informations privées utilisateurs
+**/memory/**
+**/.openred/memory/**
+**/.openred/adaptive_patterns.json
+**/personal_profiles/**
+**/user_sessions/**
+**/personal_memory_*.json
+
+# Configuration avec données sensibles de l'IA
+**/config/user_*.json
+**/config/personal_*.json
+**/sessions/*.json
+**/profiles/*.json
+
+# Logs contenant potentiellement des données personnelles
+**/personal_memory.log
+**/user_interactions.log
+**/conversation_*.log
+
+# Cache et fichiers temporaires O-RedMind IA
+**/test_corrections.py
+**/test_objection_analysis.py
+
+# Ignore Python cache and compiled files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -9,6 +37,18 @@ venv/
 .venv
 pip-log.txt
 pip-delete-this-directory.txt
+
+# OpenRedNetwork - fichiers de test et développement non essentiels
+openredNetwork/**/test_*.py
+openredNetwork/**/phantom_*/
+openredNetwork/**/orp-files/
+openredNetwork/**/user_data*/
+openredNetwork/**/*.pxl
+openredNetwork/**/*.orp
+openredNetwork/**/*.jpg
+openredNetwork/**/*.png
+openredNetwork/**/*.jpeg
+openredNetwork/test_*.py
 
 # Données personnelles OpenRed
 .openred_fort/
@@ -26,6 +66,88 @@ registry_mondial.json
 # Instructions avec données sensibles
 instructions_*_fort_*.json
 instructions_*_fort_*.txt
+
+# Fichiers de recherche et développement expérimental anti-capture/anti-caméra
+phantom-images-demo/anti_camera_patterns.py
+phantom-images-demo/anti_capture_composer.py
+phantom-images-demo/anti_screenshot_protection.py
+phantom-images-demo/demo_anti_capture.py
+phantom-images-demo/focus_protection.py
+phantom-images-demo/hybrid_protection.py
+phantom-images-demo/hybrid_protection_interface.py
+phantom-images-demo/hybrid_protection_system.py
+phantom-images-demo/invisible_anticamera_pattern.py
+phantom-images-demo/netflix_style_drm_protection.py
+phantom-images-demo/phantom_drm_anticamera_system.py
+phantom-images-demo/phantom_drm_protection.py
+phantom-images-demo/spec_compliant_anticamera.py
+phantom-images-demo/super_anti_screenshot.py
+phantom-images-demo/test_anti_capture_suite.py
+phantom-images-demo/test_protection_complete.py
+phantom-images-demo/test_quick_validation.py
+phantom-images-demo/true_aliasing_anticamera_pattern.py
+phantom-images-demo/ultrafine_total_protection.py
+
+# Versions expérimentales des fichiers officiels
+phantom-images-demo/orp_viewer_experimental.py
+phantom-images-demo/orp_viewer_clean.py
+
+# Dossiers de sortie temporaires
+phantom-images-demo/demo_output/
+
+# Fichiers de test temporaires  
+phantom-images-demo/demo_source.jpg
+phantom-images-demo/test_ocean_fixed.orp
+
+# Fichiers de recherche au niveau racine (si applicable)
+BUSINESS_STRATEGY_FAQ.md
+phantom-images-demo/PATENT_PROTECTION_STRATEGY.md
+.env.local
+
+# Private local files
+actionslog.md
+GUIDE_PUBLICATION_GITHUB.md
+guide-simple.md
+P2P_ASYMMETRIC_TOKENS.md
+P2P_LOCAL_TOKENS.md
+
+# Test and debugging files (do not commit)
+test_wsgi.py
+diagnostic.py
+CONFIGURATION_CPANEL_DETAILLEE.md
+main_simple.py
+index.py
+
+# Production and sensitive files
+.env.production
+.env.staging
+.env.development
+config/production.py
+config/staging.py
+config/local.py
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+database.sql
+migrations/versions/*.py
+
+# Log files
+logs/
+*.log
+*.log.*
+
+# Upload directories
+uploads/
+openred_uploads/
+user_uploads/
+
+# Anti-capture research (keep innovations secret)
+anti-capture-research/
+
+# SSL certificates and keys
+*.pem
 
 # Fichiers temporaires
 *.tmp

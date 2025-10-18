@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏰 Fort OpenRed - Multi-Profils</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .profile-selector {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .profile-selector h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .profile-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .profile-card.active {
+            border-color: #4CAF50;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .profile-card.active::before {
+            content: "✓";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .profile-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .profile-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .profile-type {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-description {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+
+        .profile-content {
+            display: none;
+        }
+
+        .profile-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .content-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .content-subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid;
+        }
+
+        .famille { border-left-color: #FF6B6B; }
+        .amis { border-left-color: #4ECDC4; }
+        .professionnel { border-left-color: #45B7D1; }
+        .public { border-left-color: #96CEB4; }
+
+        .feature-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .stats-bar {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .action-buttons {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .security-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .security-indicator::before {
+            content: "🔐";
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .profiles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="security-indicator">
+        Chiffrement Actif
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🏰 Fort OpenRed</h1>
+            <p>Système Multi-Profils Révolutionnaire - Souveraineté Numérique Absolue</p>
+        </div>
+
+        <div class="profile-selector">
+            <h2>👤 Choisissez votre contexte</h2>
+            <div class="profiles-grid" id="profilesGrid">
+                <!-- Les profils seront chargés dynamiquement -->
+            </div>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalProfiles">0</div>
+                    <div class="stat-label">Profils Créés</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="activeConnections">0</div>
+                    <div class="stat-label">Connexions P2P</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="dataEncrypted">100%</div>
+                    <div class="stat-label">Données Chiffrées</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Contenu Profil Famille -->
+            <div id="content-famille" class="profile-content">
+                <div class="content-header">
+                    <div class="content-title">👨‍👩‍👧‍👦 Espace Famille</div>
+                    <div class="content-subtitle">Photos, calendrier et budget familial sécurisés</div>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card famille">
+                        <div class="feature-title">📸 Photos & Souvenirs</div>
+                        <div class="feature-description">Album familial chiffré avec organisation automatique par IA et partage sélectif.</div>
+                    </div>
+                    <div class="feature-card famille">
+                        <div class="feature-title">📅 Calendrier Partagé</div>
+                        <div class="feature-description">Agenda familial intelligent avec synchronisation temps réel et rappels automatiques.</div>
+                    </div>
+                    <div class="feature-card famille">
+                        <div class="feature-title">💰 Budget Familial</div>
+                        <div class="feature-description">Gestion financière collaborative avec insights IA et objectifs d'épargne.</div>
+                    </div>
+                    <div class="feature-card famille">
+                        <div class="feature-title">💬 Messages Privés</div>
+                        <div class="feature-description">Messagerie familiale chiffrée avec traduction automatique et assistant IA.</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="ouvrirAlbumFamille()">📸 Ouvrir Album</button>
+                    <button class="btn btn-primary" onclick="ouvrirCalendrierFamille()">📅 Voir Calendrier</button>
+                    <button class="btn btn-secondary" onclick="configurerFamille()">⚙️ Configurer</button>
+                </div>
+            </div>
+
+            <!-- Contenu Profil Amis -->
+            <div id="content-amis" class="profile-content">
+                <div class="content-header">
+                    <div class="content-title">👥 Espace Amis</div>
+                    <div class="content-subtitle">Événements, loisirs et partages créatifs</div>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card amis">
+                        <div class="feature-title">🎉 Événements</div>
+                        <div class="feature-description">Organisation d'événements avec invitation automatique et coordination intelligente.</div>
+                    </div>
+                    <div class="feature-card amis">
+                        <div class="feature-title">🎮 Jeux & Divertissement</div>
+                        <div class="feature-description">Gaming P2P décentralisé et divertissements collaboratifs sans serveurs centraux.</div>
+                    </div>
+                    <div class="feature-card amis">
+                        <div class="feature-title">🎨 Partages Créatifs</div>
+                        <div class="feature-description">Studio créatif collaboratif avec IA génératrice et protection PHANTOM.</div>
+                    </div>
+                    <div class="feature-card amis">
+                        <div class="feature-title">💬 Discussions</div>
+                        <div class="feature-description">Chat décontracté avec IA conversationnelle et génération de contenu amusant.</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="creerEvenement()">🎉 Créer Événement</button>
+                    <button class="btn btn-primary" onclick="ouvrirStudioCreatif()">🎨 Studio Créatif</button>
+                    <button class="btn btn-secondary" onclick="configurerAmis()">⚙️ Configurer</button>
+                </div>
+            </div>
+
+            <!-- Contenu Profil Professionnel -->
+            <div id="content-professionnel" class="profile-content">
+                <div class="content-header">
+                    <div class="content-title">💼 Espace Professionnel</div>
+                    <div class="content-subtitle">CV, réseau et documents de travail</div>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card professionnel">
+                        <div class="feature-title">📄 CV & Portfolio</div>
+                        <div class="feature-description">CV intelligent optimisé par IA avec portfolio interactif et mise à jour automatique.</div>
+                    </div>
+                    <div class="feature-card professionnel">
+                        <div class="feature-title">🤝 Réseau Professionnel</div>
+                        <div class="feature-description">Networking intelligent avec suggestions IA et opportunités personnalisées.</div>
+                    </div>
+                    <div class="feature-card professionnel">
+                        <div class="feature-title">📊 Documents Travail</div>
+                        <div class="feature-description">Suite bureautique O-RedOffice avec collaboration temps réel et assistant IA.</div>
+                    </div>
+                    <div class="feature-card professionnel">
+                        <div class="feature-title">🎓 Formation Continue</div>
+                        <div class="feature-description">Apprentissage personnalisé avec IA tuteur et certification décentralisée.</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="ouvrirCV()">📄 Mon CV</button>
+                    <button class="btn btn-primary" onclick="ouvrirOffice()">📊 O-RedOffice</button>
+                    <button class="btn btn-secondary" onclick="configurerPro()">⚙️ Configurer</button>
+                </div>
+            </div>
+
+            <!-- Contenu Profil Public -->
+            <div id="content-public" class="profile-content">
+                <div class="content-header">
+                    <div class="content-title">🌍 Espace Public</div>
+                    <div class="content-subtitle">Blog, projets et contributions communautaires</div>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card public">
+                        <div class="feature-title">📰 Blog Personnel</div>
+                        <div class="feature-description">Blog avec IA rédactrice, SEO automatique et distribution P2P mondiale.</div>
+                    </div>
+                    <div class="feature-card public">
+                        <div class="feature-title">🚀 Projets Open Source</div>
+                        <div class="feature-description">Showcase projets avec collaboration décentralisée et contributions récompensées.</div>
+                    </div>
+                    <div class="feature-card public">
+                        <div class="feature-title">🤝 Contributions</div>
+                        <div class="feature-description">Impact communautaire avec mesure d'influence positive et reconnaissance.</div>
+                    </div>
+                    <div class="feature-card public">
+                        <div class="feature-title">🌟 Influence Positive</div>
+                        <div class="feature-description">Amplification IA de votre impact social et environnemental positif.</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="ouvrirBlog()">📰 Mon Blog</button>
+                    <button class="btn btn-primary" onclick="ouvrirProjets()">🚀 Mes Projets</button>
+                    <button class="btn btn-secondary" onclick="configurerPublic()">⚙️ Configurer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Données des profils (simulées - à connecter avec le backend Python)
+        const profils = [
+            {
+                id: 'famille_demo123',
+                type: 'famille',
+                nom: 'Ma Famille',
+                description: 'Photos, calendrier et budget familial',
+                icone: '👨‍👩‍👧‍👦',
+                couleur: '#FF6B6B',
+                actif: true
+            },
+            {
+                id: 'amis_demo456',
+                type: 'amis',
+                nom: 'Mes Amis',
+                description: 'Événements, loisirs et partages créatifs',
+                icone: '👥',
+                couleur: '#4ECDC4',
+                actif: false
+            },
+            {
+                id: 'professionnel_demo789',
+                type: 'professionnel',
+                nom: 'Professionnel',
+                description: 'CV, réseau et documents de travail',
+                icone: '💼',
+                couleur: '#45B7D1',
+                actif: false
+            },
+            {
+                id: 'public_demo000',
+                type: 'public',
+                nom: 'Public',
+                description: 'Blog, projets et contributions',
+                icone: '🌍',
+                couleur: '#96CEB4',
+                actif: false
+            }
+        ];
+
+        let profilActif = 'famille_demo123';
+
+        function chargerProfils() {
+            const grid = document.getElementById('profilesGrid');
+            grid.innerHTML = '';
+
+            profils.forEach(profil => {
+                const card = document.createElement('div');
+                card.className = `profile-card ${profil.actif ? 'active' : ''}`;
+                card.style.borderLeftColor = profil.couleur;
+                card.onclick = () => activerProfil(profil.id);
+
+                card.innerHTML = `
+                    <div class="profile-icon">${profil.icone}</div>
+                    <div class="profile-name">${profil.nom}</div>
+                    <div class="profile-type">${profil.type}</div>
+                    <div class="profile-description">${profil.description}</div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            // Met à jour les statistiques
+            document.getElementById('totalProfiles').textContent = profils.length;
+            document.getElementById('activeConnections').textContent = Math.floor(Math.random() * 20) + 5;
+        }
+
+        function activerProfil(profilId) {
+            // Met à jour l'état des profils
+            profils.forEach(p => p.actif = (p.id === profilId));
+            profilActif = profilId;
+
+            // Recharge l'affichage
+            chargerProfils();
+
+            // Cache tous les contenus
+            document.querySelectorAll('.profile-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Affiche le contenu du profil actif
+            const typeProfil = profils.find(p => p.id === profilId)?.type;
+            if (typeProfil) {
+                const content = document.getElementById(`content-${typeProfil}`);
+                if (content) {
+                    content.classList.add('active');
+                }
+            }
+
+            // Simule un appel API vers le backend Python
+            console.log(`🔄 Activation profil: ${profilId}`);
+            // fetch(`/api/profils/activer/${profilId}`, { method: 'POST' });
+        }
+
+        // Fonctions des boutons d'action (à implémenter)
+        function ouvrirAlbumFamille() {
+            alert('🚀 Ouverture Album Famille (à implémenter)');
+        }
+
+        function ouvrirCalendrierFamille() {
+            alert('🚀 Ouverture Calendrier Famille (à implémenter)');
+        }
+
+        function configurerFamille() {
+            alert('🚀 Configuration Profil Famille (à implémenter)');
+        }
+
+        function creerEvenement() {
+            alert('🚀 Création Événement (à implémenter)');
+        }
+
+        function ouvrirStudioCreatif() {
+            alert('🚀 Ouverture Studio Créatif (à implémenter)');
+        }
+
+        function configurerAmis() {
+            alert('🚀 Configuration Profil Amis (à implémenter)');
+        }
+
+        function ouvrirCV() {
+            alert('🚀 Ouverture CV (à implémenter)');
+        }
+
+        function ouvrirOffice() {
+            alert('🚀 Ouverture O-RedOffice (à implémenter)');
+        }
+
+        function configurerPro() {
+            alert('🚀 Configuration Profil Pro (à implémenter)');
+        }
+
+        function ouvrirBlog() {
+            alert('🚀 Ouverture Blog (à implémenter)');
+        }
+
+        function ouvrirProjets() {
+            alert('🚀 Ouverture Projets (à implémenter)');
+        }
+
+        function configurerPublic() {
+            alert('🚀 Configuration Profil Public (à implémenter)');
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            chargerProfils();
+            activerProfil(profilActif);
+        });
+    </script>
+</body>
+</html>

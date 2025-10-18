@@ -1,0 +1,74 @@
+/* O-RedMind Custom Styles */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.chat-message {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+}
+
+.chat-message.user {
+    background-color: #007bff;
+    color: white;
+    text-align: right;
+    margin-left: 20%;
+}
+
+.chat-message.ai {
+    background-color: #e9ecef;
+    color: #333;
+    margin-right: 20%;
+}
+
+.chat-message.system {
+    background-color: #fff3cd;
+    color: #856404;
+    text-align: center;
+    font-style: italic;
+}
+
+.thinking {
+    opacity: 0.7;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.status-online {
+    color: #28a745;
+}
+
+.status-offline {
+    color: #dc3545;
+}
+
+.file-attachment {
+    background-color: #f8f9fa;
+    border: 1px dashed #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.confidence-badge {
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+.reasoning-type {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 0.25rem;
+}

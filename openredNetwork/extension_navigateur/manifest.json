@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "OpenRed Protocol Handler",
+  "version": "1.0.0",
+  "description": "Extension navigateur pour supporter le protocole orp:// - OpenRed Network P2P",
+  
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "declarativeNetRequest"
+  ],
+  
+  "host_permissions": [
+    "orp://*/*",
+    "http://localhost:*/*",
+    "http://127.0.0.1:*/*"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "OpenRed Protocol Handler",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png", 
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["resolver.js", "orp-bridge.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  
+  "options_page": "options.html"
+}

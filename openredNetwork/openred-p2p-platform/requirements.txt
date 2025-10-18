@@ -1,0 +1,28 @@
+# OpenRed P2P Platform - Dependencies
+# Version Demo pour contributeurs
+
+# Web Framework
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# WebSocket Support  
+websockets==12.0
+
+# Image Processing (pour miniatures profils)
+pillow==10.1.0
+
+# Cryptography (sécurité RSA)
+cryptography==41.0.8
+
+# Network UDP (pour multicast)
+asyncio-dgram>=2.1.2  
+dataclasses-json>=0.6.1
+
+# Optional: For web interface (future)
+# fastapi>=0.104.0
+# uvicorn>=0.24.0
+# websockets>=12.0
+
+# Optional: For enhanced URN support
+# pillow>=10.0.0
+# numpy>=1.24.0

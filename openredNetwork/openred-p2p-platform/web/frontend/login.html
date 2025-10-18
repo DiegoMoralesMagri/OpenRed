@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 OpenRed - Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"]::placeholder, input[type="password"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .error {
+            background: rgba(244, 67, 54, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: none;
+        }
+        
+        .success {
+            background: rgba(76, 175, 80, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: none;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .tab.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .loading {
+            display: none;
+            margin: 10px 0;
+        }
+        
+        .spinner {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 2px solid white;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">🌐</div>
+        <h1 class="title">OpenRed P2P</h1>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('login')">Connexion</button>
+            <button class="tab" onclick="switchTab('setup')">Première Installation</button>
+        </div>
+        
+        <!-- Onglet Login -->
+        <div id="login-tab" class="tab-content active">
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Nom d'utilisateur :</label>
+                    <input type="text" id="login-username" name="username" placeholder="Votre nom d'utilisateur" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Mot de passe :</label>
+                    <input type="password" id="login-password" name="password" placeholder="Votre mot de passe" required>
+                </div>
+                
+                <button type="submit" class="btn">🔓 Se Connecter</button>
+            </form>
+        </div>
+        
+        <!-- Onglet Setup -->
+        <div id="setup-tab" class="tab-content">
+            <form id="setup-form">
+                <div class="form-group">
+                    <label for="setup-username">Nom d'utilisateur :</label>
+                    <input type="text" id="setup-username" name="username" placeholder="Choisissez un nom d'utilisateur" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="setup-password">Mot de passe :</label>
+                    <input type="password" id="setup-password" name="password" placeholder="Choisissez un mot de passe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="setup-password-confirm">Confirmer le mot de passe :</label>
+                    <input type="password" id="setup-password-confirm" name="password_confirm" placeholder="Confirmez votre mot de passe" required>
+                </div>
+                
+                <button type="submit" class="btn">🚀 Créer le Compte</button>
+            </form>
+            
+            <div class="info">
+                <strong>ℹ️ Première installation :</strong><br>
+                • Créez votre compte administrateur OpenRed<br>
+                • Ce compte sécurise l'accès à votre nœud P2P<br>
+                • Personne d'autre ne pourra accéder à votre interface
+            </div>
+        </div>
+        
+        <div id="error-message" class="error"></div>
+        <div id="success-message" class="success"></div>
+        <div id="loading" class="loading">
+            <span class="spinner"></span>
+            <span>Connexion en cours...</span>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Cacher tous les onglets
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Afficher l'onglet sélectionné
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            // Réinitialiser les messages
+            hideMessages();
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            document.getElementById('success-message').style.display = 'none';
+        }
+        
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            document.getElementById('error-message').style.display = 'none';
+        }
+        
+        function hideMessages() {
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        }
+        
+        function showLoading(show = true) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+            
+            // Désactiver les boutons pendant le chargement
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.disabled = show;
+            });
+        }
+        
+        // Gestion du formulaire de login
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+            showLoading(true);
+            
+            const formData = new FormData(e.target);
+            const loginData = {
+                username: formData.get('username'),
+                password: formData.get('password')
+            };
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Stocker le token et rediriger
+                    localStorage.setItem('openred_token', result.token);
+                    showSuccess('Connexion réussie ! Redirection...');
+                    
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
+                } else {
+                    showError(result.message || 'Erreur de connexion');
+                }
+            } catch (error) {
+                showError('Erreur de connexion au serveur');
+                console.error('Login error:', error);
+            }
+            
+            showLoading(false);
+        });
+        
+        // Gestion du formulaire de setup
+        document.getElementById('setup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+            
+            const formData = new FormData(e.target);
+            const password = formData.get('password');
+            const passwordConfirm = formData.get('password_confirm');
+            
+            // Vérifier que les mots de passe correspondent
+            if (password !== passwordConfirm) {
+                showError('Les mots de passe ne correspondent pas');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('Le mot de passe doit contenir au moins 6 caractères');
+                return;
+            }
+            
+            showLoading(true);
+            
+            const setupData = {
+                username: formData.get('username'),
+                password: password
+            };
+            
+            try {
+                const response = await fetch('/api/auth/setup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(setupData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    showSuccess('Compte créé avec succès ! Vous pouvez maintenant vous connecter.');
+                    
+                    // Basculer vers l'onglet login
+                    setTimeout(() => {
+                        switchTab('login');
+                        document.getElementById('login-username').value = setupData.username;
+                    }, 2000);
+                } else {
+                    showError(result.message || 'Erreur lors de la création du compte');
+                }
+            } catch (error) {
+                showError('Erreur de connexion au serveur');
+                console.error('Setup error:', error);
+            }
+            
+            showLoading(false);
+        });
+        
+        // Vérifier au chargement s'il faut afficher setup ou login
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch('/api/auth/status');
+                const status = await response.json();
+                
+                if (!status.configured) {
+                    // Pas d'utilisateur configuré, afficher setup par défaut
+                    switchTab('setup');
+                }
+            } catch (error) {
+                console.log('Could not check auth status');
+            }
+        });
+    </script>
+</body>
+</html>

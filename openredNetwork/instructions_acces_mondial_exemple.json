@@ -1,0 +1,34 @@
+{
+  "titre": "🌍 CONFIGURATION ROUTEUR POUR ACCÈS MONDIAL",
+  "ip_publique": "VOTRE_IP_PUBLIQUE",
+  "port": 8080,
+  "etapes": [
+    {
+      "numero": 1,
+      "titre": "Accéder à l'interface routeur",
+      "description": "Ouvrez l'interface web de votre routeur",
+      "actions": [
+        "Tapez l'adresse IP de votre routeur (ex: 192.168.1.1)",
+        "Connectez-vous avec vos identifiants administrateur"
+      ]
+    },
+    {
+      "numero": 2,
+      "titre": "Configurer redirection de port",
+      "description": "Créer une règle NAT/Port Forwarding",
+      "actions": [
+        "Allez dans 'Port Forwarding' ou 'NAT'",
+        "Créez une nouvelle règle:",
+        "  - Port externe: 8080",
+        "  - IP locale: VOTRE_IP_LOCALE",
+        "  - Port interne: 8080",
+        "  - Protocole: TCP"
+      ]
+    }
+  ],
+  "notes": [
+    "Remplacez VOTRE_IP_PUBLIQUE par votre vraie IP publique",
+    "Remplacez VOTRE_IP_LOCALE par l'IP de votre machine",
+    "Vérifiez que votre pare-feu autorise le port 8080"
+  ]
+}

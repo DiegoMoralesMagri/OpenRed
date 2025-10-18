@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="text-center mb-5">
+            <h1 class="display-4">
+                <i class="fas fa-brain text-primary"></i>
+                O-RedMind
+            </h1>
+            <p class="lead">Votre Intelligence Artificielle Personnelle et Privée</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-lock fa-3x text-success mb-3"></i>
+                        <h5>100% Privé</h5>
+                        <p>Toutes vos données restent sur votre appareil</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-magic fa-3x text-warning mb-3"></i>
+                        <h5>Multimodal</h5>
+                        <p>Texte, images, audio, code et documents</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-cog fa-3x text-info mb-3"></i>
+                        <h5>Personnalisé</h5>
+                        <p>S'adapte à votre style et vos préférences</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{{ url_for('chat') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-comments"></i> Commencer à chatter
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

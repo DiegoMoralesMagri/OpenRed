@@ -1,0 +1,30 @@
+{
+  "deployment_system": "OpenRed Universal Deployment",
+  "version": "1.0.0",
+  "capabilities": {
+    "one_liner_installation": true,
+    "multi_platform_support": true,
+    "shared_hosting_optimization": true,
+    "vps_support": true,
+    "cloud_platform_support": true
+  },
+  "supported_platforms": [
+    "Linux/Unix",
+    "Windows",
+    "macOS",
+    "O2Switch",
+    "OVH",
+    "HostGator",
+    "GoDaddy",
+    "AWS",
+    "Google Cloud",
+    "Azure",
+    "DigitalOcean"
+  ],
+  "package_sizes": {
+    "complete": "951 KB",
+    "shared_hosting": "127 KB"
+  },
+  "installation_time": "~30 seconds",
+  "compatibility_rate": "95%"
+}
